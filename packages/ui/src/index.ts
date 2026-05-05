@@ -12,5 +12,5 @@
 // export { BirthdayCountdown } from './components/birthday-countdown';
 // export { CelebrationOverlay } from './components/celebration-overlay';
 
-// Tokens (filled in by Task 3)
-// export * from './tokens';
+// Tokens
+export * from './tokens';
