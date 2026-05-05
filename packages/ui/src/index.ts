@@ -1,7 +1,8 @@
 // Components (filled in by component extraction tasks)
 export { AnimatedBalance } from './components/animated-balance';
 export type { AnimatedBalanceProps } from './components/animated-balance';
-// export { Confetti } from './components/confetti';
+export { Confetti } from './components/confetti';
+export type { ConfettiProps } from './components/confetti';
 // export { FloatingCoins } from './components/floating-coins';
 // export { ProgressBar } from './components/progress-bar';
 // export { Toast, ToastProvider } from './components/toast';
