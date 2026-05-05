@@ -25,7 +25,9 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "sideEffects": ["**/*.css"],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist",
     "public",
@@ -48,13 +50,15 @@
     "lint": "eslint src --max-warnings=0"
   },
   "peerDependencies": {
+    "framer-motion": ">=11",
     "react": ">=19",
     "react-dom": ">=19",
-    "tailwindcss": ">=4",
-    "framer-motion": ">=11"
+    "tailwindcss": ">=4"
   },
   "peerDependenciesMeta": {
-    "framer-motion": { "optional": true }
+    "framer-motion": {
+      "optional": true
+    }
   },
   "dependencies": {
     "canvas-confetti": "^1.9.3"
@@ -65,6 +69,7 @@
     "@types/canvas-confetti": "^1.9.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.7.0",
     "@vitest/coverage-v8": "^2.0.0",
     "eslint": "^9.0.0",
     "framer-motion": "^11.0.0",
