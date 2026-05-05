@@ -17,7 +17,8 @@ export { ThemeToggle } from './components/theme-toggle';
 export type { Theme, ThemeToggleProps } from './components/theme-toggle';
 export { KidAvatar } from './components/kid-avatar';
 export type { KidAvatarProps } from './components/kid-avatar';
-// export { AchievementBadge } from './components/achievement-badge';
+export { AchievementBadge, AchievementBadgeGrid, defaultBadges } from './components/achievement-badge';
+export type { BadgeDef, AchievementBadgeProps, AchievementBadgeGridProps } from './components/achievement-badge';
 // export { BirthdayCountdown } from './components/birthday-countdown';
 // export { CelebrationOverlay } from './components/celebration-overlay';
 
