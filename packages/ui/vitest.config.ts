@@ -13,4 +13,11 @@ export default defineConfig({
       exclude: ['**/*.test.tsx', '**/*.test.ts', 'dist'],
     },
   },
+  resolve: {
+    alias: {
+      // In the test environment, replace framer-motion with a lightweight stub
+      // so AnimatePresence doesn't hold exited elements in the DOM.
+      'framer-motion': '/Users/simsketch/repos/kidcash-ui/packages/ui/src/test/framer-motion-mock.tsx',
+    },
+  },
 });
