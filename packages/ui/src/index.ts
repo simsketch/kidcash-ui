@@ -21,7 +21,8 @@ export { AchievementBadge, AchievementBadgeGrid, defaultBadges } from './compone
 export type { BadgeDef, AchievementBadgeProps, AchievementBadgeGridProps } from './components/achievement-badge';
 export { BirthdayCountdown } from './components/birthday-countdown';
 export type { BirthdayCountdownProps } from './components/birthday-countdown';
-// export { CelebrationOverlay } from './components/celebration-overlay';
+export { CelebrationOverlay } from './components/celebration-overlay';
+export type { CelebrationOverlayProps } from './components/celebration-overlay';
 
 // Tokens
 export * from './tokens';
