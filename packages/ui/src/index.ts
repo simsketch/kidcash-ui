@@ -19,7 +19,8 @@ export { KidAvatar } from './components/kid-avatar';
 export type { KidAvatarProps } from './components/kid-avatar';
 export { AchievementBadge, AchievementBadgeGrid, defaultBadges } from './components/achievement-badge';
 export type { BadgeDef, AchievementBadgeProps, AchievementBadgeGridProps } from './components/achievement-badge';
-// export { BirthdayCountdown } from './components/birthday-countdown';
+export { BirthdayCountdown } from './components/birthday-countdown';
+export type { BirthdayCountdownProps } from './components/birthday-countdown';
 // export { CelebrationOverlay } from './components/celebration-overlay';
 
 // Tokens
