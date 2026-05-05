@@ -1,5 +1,6 @@
 // Components (filled in by component extraction tasks)
-// export { AnimatedBalance } from './components/animated-balance';
+export { AnimatedBalance } from './components/animated-balance';
+export type { AnimatedBalanceProps } from './components/animated-balance';
 // export { Confetti } from './components/confetti';
 // export { FloatingCoins } from './components/floating-coins';
 // export { ProgressBar } from './components/progress-bar';

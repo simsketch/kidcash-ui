@@ -7,11 +7,14 @@ afterEach(() => {
 });
 
 // Mock matchMedia for components that read prefers-reduced-motion
+// addListener/removeListener are the deprecated but still-called framer-motion API
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: (query: string) => ({
     matches: false,
     media: query,
+    addListener: () => {},
+    removeListener: () => {},
     addEventListener: () => {},
     removeEventListener: () => {},
   }),
