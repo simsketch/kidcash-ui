@@ -1,0 +1,15 @@
+{
+  "name": "kidcash-ui-workspace",
+  "private": true,
+  "packageManager": "pnpm@9",
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "dev": "pnpm --filter ./apps/docs dev"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}
