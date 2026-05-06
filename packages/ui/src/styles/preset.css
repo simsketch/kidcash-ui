@@ -1,33 +1,59 @@
 @theme {
+  /* Brand */
   --color-primary: #8b5cf6;
   --color-primary-light: #a78bfa;
   --color-primary-dark: #7c3aed;
   --color-secondary: #ec4899;
   --color-accent: #06b6d4;
+
+  /* Semantic */
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
-  --color-bg-dark: #0f0b1a;
-  --color-text-light: #f1f5f9;
-  --color-text-muted: #64748b;
 
-  --radius-card: 1rem;
-  --radius-card-lg: 1.5rem;
+  /* Surface */
+  --color-bg-dark: #0a0612;
+  --color-text-light: #fafafa;
+  --color-text-muted: #a1a1aa;
+
+  /* Glass surfaces */
+  --glass-surface: rgba(255, 255, 255, 0.05);
+  --glass-surface-hover: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-strong: rgba(255, 255, 255, 0.15);
+  --glass-highlight: rgba(255, 255, 255, 0.06);
+
+  /* Radii */
+  --radius-card: 16px;
+  --radius-card-lg: 24px;
   --radius-pill: 9999px;
+  --radius-button: 12px;
 
-  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  --shadow-glow-primary: 0 4px 14px rgba(139, 92, 246, 0.3);
-  --shadow-glow-accent: 0 4px 14px rgba(6, 182, 212, 0.3);
-
+  /* Type */
+  --font-sans: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --font-display: 'Geist', system-ui, sans-serif;
   --font-rounded: ui-rounded, 'SF Pro Rounded', system-ui, sans-serif;
 
+  /* Springs / easing */
+  --ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decel: cubic-bezier(0, 0, 0, 1);
+  --ease-accel: cubic-bezier(0.42, 0, 1, 1);
   --ease-bounce-in: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-mascot: ease-in-out;
+
+  /* Shadows (legacy) */
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 16px 48px rgba(0, 0, 0, 0.5);
+  --shadow-glow-primary: 0 0 40px rgba(139, 92, 246, 0.4), 0 0 80px rgba(139, 92, 246, 0.2);
+  --shadow-glow-accent: 0 0 40px rgba(6, 182, 212, 0.4), 0 0 80px rgba(6, 182, 212, 0.2);
 }
 
+/* ----- Keyframes ----- */
 @keyframes bounce-in {
   0% { transform: scale(0.8); opacity: 0; }
-  60% { transform: scale(1.1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 1; }
   100% { transform: scale(1); }
 }
 
@@ -36,19 +62,148 @@
   50% { transform: translateY(-8px); }
 }
 
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 
+@keyframes shimmer-flow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* ----- Liquid-glass utilities ----- */
+@utility glass {
+  background: var(--glass-surface);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+@utility glass-strong {
+  background: var(--glass-surface-hover);
+  backdrop-filter: blur(60px) saturate(200%);
+  -webkit-backdrop-filter: blur(60px) saturate(200%);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+/* ----- Vibrant gradient backgrounds ----- */
 @utility bg-gradient-aurora {
-  background-image: linear-gradient(135deg, var(--color-primary), var(--color-success), var(--color-accent));
+  background-image: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #06b6d4 100%);
+}
+
+@utility bg-gradient-sunset {
+  background-image: linear-gradient(135deg, #f59e0b 0%, #ec4899 50%, #8b5cf6 100%);
+}
+
+@utility bg-gradient-forest {
+  background-image: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #8b5cf6 100%);
+}
+
+@utility bg-gradient-flame {
+  background-image: linear-gradient(135deg, #ef4444 0%, #f59e0b 50%, #ec4899 100%);
 }
 
 @utility bg-gradient-success {
-  background-image: linear-gradient(135deg, var(--color-success), var(--color-warning));
+  background-image: linear-gradient(135deg, #10b981, #f59e0b);
 }
 
 @utility bg-gradient-danger {
-  background-image: linear-gradient(135deg, var(--color-danger), var(--color-secondary));
+  background-image: linear-gradient(135deg, #ef4444, #ec4899);
+}
+
+/* ----- Gradient text ----- */
+@utility text-gradient-aurora {
+  background-image: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-gradient-sunset {
+  background-image: linear-gradient(135deg, #f59e0b 0%, #ec4899 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-gradient-forest {
+  background-image: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-gradient-flame {
+  background-image: linear-gradient(135deg, #ef4444 0%, #f59e0b 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-gradient-animated {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899, #06b6d4, #10b981, #8b5cf6);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-flow 8s linear infinite;
+}
+
+/* ----- Shimmer overlay ----- */
+@utility shimmer-overlay {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shimmer-flow 2s linear infinite;
+  }
+}
+
+/* ----- Glow shadows ----- */
+@utility shadow-glow-primary {
+  box-shadow: 0 0 40px rgba(139, 92, 246, 0.4), 0 0 80px rgba(139, 92, 246, 0.2);
+}
+@utility shadow-glow-accent {
+  box-shadow: 0 0 40px rgba(6, 182, 212, 0.4), 0 0 80px rgba(6, 182, 212, 0.2);
+}
+@utility shadow-glow-success {
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.4);
+}
+@utility shadow-glow-danger {
+  box-shadow: 0 0 40px rgba(239, 68, 68, 0.4);
+}
+
+/* ----- Hover lift (interactive cards) ----- */
+@utility hover-lift {
+  transition: transform 200ms var(--ease-smooth), box-shadow 200ms var(--ease-smooth);
+
+  &:hover {
+    transform: translateY(-2px) scale(1.005);
+  }
 }

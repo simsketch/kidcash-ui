@@ -24,5 +24,15 @@ export type { BirthdayCountdownProps } from './components/birthday-countdown';
 export { CelebrationOverlay } from './components/celebration-overlay';
 export type { CelebrationOverlayProps } from './components/celebration-overlay';
 
+// Foundation v2 — new primitives (Pass 1)
+export { GlassCard } from './components/glass-card';
+export type { GlassCardProps } from './components/glass-card';
+export { Button } from './components/button';
+export type { ButtonProps } from './components/button';
+export { GradientText } from './components/gradient-text';
+export type { GradientTextProps } from './components/gradient-text';
+export { AnimatedNumber } from './components/animated-number';
+export type { AnimatedNumberProps } from './components/animated-number';
+
 // Tokens
 export * from './tokens';
