@@ -202,7 +202,7 @@ function PhenomenalSections() {
   return (
     <>
       {/* ----- Command Palette ----- */}
-      <GlassCard variant="strong" glow="primary" className="!p-10 space-y-6 mb-12">
+      <GlassCard variant="strong" className="!p-10 space-y-6 mb-12">
         <SectionHeader
           title="Command palette"
           variant="aurora"
@@ -504,7 +504,7 @@ function PlaygroundInner() {
         </Spotlight>
 
         {/* ----- Theme ----- */}
-        <GlassCard variant="strong" glow="primary" className="!p-10 space-y-6 mb-12">
+        <GlassCard variant="strong" className="!p-10 space-y-6 mb-12">
           <SectionHeader
             title="Theme"
             variant="animated"
@@ -627,7 +627,7 @@ function PlaygroundInner() {
         </GlassCard>
 
         {/* ----- Animated number ----- */}
-        <GlassCard variant="strong" glow="accent" className="!p-10 space-y-6 mb-12">
+        <GlassCard variant="strong" className="!p-10 space-y-6 mb-12">
           <SectionHeader
             title="Animated number"
             variant="aurora"
@@ -867,7 +867,7 @@ function PlaygroundInner() {
         </section>
 
         {/* ----- Celebration overlay ----- */}
-        <GlassCard variant="strong" glow="primary" className="!p-10 space-y-6 mb-12">
+        <GlassCard variant="strong" className="!p-10 space-y-6 mb-12">
           <SectionHeader
             title="Celebration overlay"
             variant="flame"
