@@ -1,26 +1,50 @@
 'use client';
+import { motion } from 'framer-motion';
+import { spring } from '../tokens/motion';
+
+export type ProgressBarVariant = 'primary' | 'success' | 'danger';
+export type ProgressBarSize = 'sm' | 'md' | 'lg';
 
 export interface ProgressBarProps {
   value: number;
   max?: number;
   label?: string;
-  variant?: 'primary' | 'success' | 'danger';
+  variant?: ProgressBarVariant;
+  /** Apply a shimmer overlay + spring tween on the fill. */
   animate?: boolean;
+  /** Render the percentage on the right side of the label row. */
+  showValue?: boolean;
+  size?: ProgressBarSize;
   className?: string;
 }
 
-const variantClass = {
+const variantClass: Record<ProgressBarVariant, string> = {
   primary: 'bg-gradient-aurora',
   success: 'bg-gradient-success',
-  danger: 'bg-gradient-danger',
-} as const;
+  danger: 'bg-gradient-flame',
+};
 
+const heightClass: Record<ProgressBarSize, string> = {
+  sm: 'h-1',
+  md: 'h-2',
+  lg: 'h-3',
+};
+
+/**
+ * `ProgressBar` — Apple-style fill on a glass track.
+ *
+ * Track uses the `glass` utility (translucent with backdrop blur). The fill
+ * is a vibrant gradient sized to the current ratio. When `animate=true` the
+ * fill grows on a spring and a shimmer overlay drifts across.
+ */
 export function ProgressBar({
   value,
   max = 100,
   label,
   variant = 'primary',
   animate = true,
+  showValue = false,
+  size = 'md',
   className,
 }: ProgressBarProps) {
   const clamped = Math.max(0, Math.min(max, value));
@@ -34,14 +58,25 @@ export function ProgressBar({
       aria-valuemax={max}
       className={className}
     >
-      {label && <div className="text-sm mb-1">{label}</div>}
-      <div className="h-2 bg-white/10 rounded-pill overflow-hidden">
-        <div
-          className={`h-full rounded-pill ${variantClass[variant]}`}
-          style={{
-            width: `${pct}%`,
-            transition: animate ? 'width 1s cubic-bezier(0.34, 1.56, 0.64, 1)' : 'none',
-          }}
+      {(label || showValue) && (
+        <div className="flex items-baseline justify-between mb-2">
+          {label && <div className="text-sm font-medium text-text-light">{label}</div>}
+          {showValue && (
+            <div className="text-sm tabular-nums text-text-muted font-mono">
+              {Math.round(pct)}%
+            </div>
+          )}
+        </div>
+      )}
+      <div className={`glass ${heightClass[size]} rounded-pill overflow-hidden relative`}>
+        <motion.div
+          className={`h-full rounded-pill ${variantClass[variant]} ${
+            animate ? 'shimmer-overlay' : ''
+          }`}
+          initial={false}
+          animate={{ width: `${pct}%` }}
+          transition={animate ? spring.gentle : { duration: 0 }}
+          style={{ width: `${pct}%` }}
         />
       </div>
     </div>

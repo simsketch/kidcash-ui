@@ -4,12 +4,14 @@ import { EmojiPicker, defaultEmojis } from './emoji-picker';
 
 describe('<EmojiPicker>', () => {
   it('renders nothing when closed', () => {
-    const { container } = render(<EmojiPicker open={false} onClose={() => {}} onSelect={() => {}} />);
-    expect(container.firstChild).toBeNull();
+    render(<EmojiPicker open={false} onClose={() => {}} onSelect={() => {}} />);
+    expect(screen.queryByTestId('emoji-picker-backdrop')).toBeNull();
   });
 
   it('renders emojis when open', () => {
-    render(<EmojiPicker open={true} onClose={() => {}} onSelect={() => {}} emojis={['🎉', '🎂']} />);
+    render(
+      <EmojiPicker open={true} onClose={() => {}} onSelect={() => {}} emojis={['🎉', '🎂']} />,
+    );
     expect(screen.getByText('🎉')).toBeInTheDocument();
     expect(screen.getByText('🎂')).toBeInTheDocument();
   });
@@ -36,7 +38,23 @@ describe('<EmojiPicker>', () => {
     expect(onClose).toHaveBeenCalled();
   });
 
-  it('exports defaultEmojis with at least 30 entries', () => {
-    expect(defaultEmojis.length).toBeGreaterThanOrEqual(30);
+  it('exports defaultEmojis with at least 96 entries', () => {
+    expect(defaultEmojis.length).toBeGreaterThanOrEqual(96);
+  });
+
+  it('filters emojis by search query', () => {
+    render(
+      <EmojiPicker
+        open={true}
+        onClose={() => {}}
+        onSelect={() => {}}
+        emojis={['🦄', '🐱', '🚀']}
+      />,
+    );
+    const input = screen.getByLabelText('Search emojis');
+    fireEvent.change(input, { target: { value: 'unicorn' } });
+    expect(screen.getByText('🦄')).toBeInTheDocument();
+    expect(screen.queryByText('🐱')).toBeNull();
+    expect(screen.queryByText('🚀')).toBeNull();
   });
 });

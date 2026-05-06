@@ -25,4 +25,9 @@ describe('<FloatingCoins>', () => {
     const { container } = render(<FloatingCoins count={1} className="z-50" />);
     expect(container.firstChild).toHaveClass('z-50');
   });
+
+  it('exposes the chosen variant on the container', () => {
+    const { container } = render(<FloatingCoins count={1} variant="rise" />);
+    expect((container.firstChild as HTMLElement).getAttribute('data-variant')).toBe('rise');
+  });
 });

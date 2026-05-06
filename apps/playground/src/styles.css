@@ -1,0 +1,20 @@
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+@import 'tailwindcss';
+@import '@kidcash/ui/preset.css';
+
+@source "../../../packages/ui/src/**/*.tsx";
+@source "../../../packages/ui/dist/**/*.js";
+
+body {
+  background: var(--color-bg-dark);
+  color: var(--color-text-light);
+  font-family: var(--font-sans);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'cv11', 'ss01';
+}
+
+* {
+  box-sizing: border-box;
+}

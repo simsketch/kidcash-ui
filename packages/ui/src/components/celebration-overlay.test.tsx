@@ -6,10 +6,8 @@ vi.mock('canvas-confetti', () => ({ default: vi.fn() }));
 
 describe('<CelebrationOverlay>', () => {
   it('renders nothing when open=false', () => {
-    const { container } = render(
-      <CelebrationOverlay open={false} onClose={() => {}} />,
-    );
-    expect(container.firstChild).toBeNull();
+    render(<CelebrationOverlay open={false} onClose={() => {}} />);
+    expect(screen.queryByRole('alertdialog')).toBeNull();
   });
 
   it('renders title and subtitle when open', () => {

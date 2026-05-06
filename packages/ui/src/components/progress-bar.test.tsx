@@ -33,4 +33,14 @@ describe('<ProgressBar>', () => {
     expect(bar.getAttribute('aria-valuemin')).toBe('0');
     expect(bar.getAttribute('aria-valuemax')).toBe('100');
   });
+
+  it('shows the percentage when showValue is set', () => {
+    render(<ProgressBar value={42} showValue label="Progress" />);
+    expect(screen.getByText('42%')).toBeInTheDocument();
+  });
+
+  it('applies the chosen size class', () => {
+    const { container } = render(<ProgressBar value={50} size="lg" />);
+    expect(container.querySelector('.h-3')).toBeTruthy();
+  });
 });

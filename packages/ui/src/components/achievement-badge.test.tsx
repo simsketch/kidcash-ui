@@ -10,14 +10,28 @@ describe('<AchievementBadge>', () => {
   });
 
   it('applies locked styling when unlocked=false', () => {
-    const { container } = render(<AchievementBadge id="x" label="Locked" emoji="🔒" unlocked={false} />);
+    const { container } = render(
+      <AchievementBadge id="x" label="Locked" emoji="🔒" unlocked={false} />,
+    );
     const card = container.firstChild as HTMLElement;
-    expect(card.className).toMatch(/opacity-50|grayscale/);
+    expect(card.className).toMatch(/opacity-30|grayscale/);
   });
 
   it('renders the description when provided', () => {
-    render(<AchievementBadge id="x" label="Hi" emoji="🎯" unlocked={true} description="A test desc" />);
+    render(
+      <AchievementBadge id="x" label="Hi" emoji="🎯" unlocked={true} description="A test desc" />,
+    );
     expect(screen.getByText('A test desc')).toBeInTheDocument();
+  });
+
+  it('shows the lock icon when locked', () => {
+    render(<AchievementBadge id="x" label="X" emoji="🔒" unlocked={false} />);
+    expect(screen.getByTestId('badge-lock')).toBeInTheDocument();
+  });
+
+  it('renders tier dots when a tier is provided', () => {
+    render(<AchievementBadge id="x" label="X" emoji="🥇" unlocked={true} tier="gold" />);
+    expect(screen.getByTestId('tier-dots-gold')).toBeInTheDocument();
   });
 });
 
@@ -42,5 +56,11 @@ describe('defaultBadges', () => {
     const ids = defaultBadges.map((b) => b.id);
     expect(ids).toContain('first-save');
     expect(ids).toContain('goal-master');
+  });
+
+  it('all default badges have a tier assigned', () => {
+    for (const b of defaultBadges) {
+      expect(b.tier).toBeDefined();
+    }
   });
 });

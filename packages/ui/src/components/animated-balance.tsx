@@ -1,53 +1,24 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatedNumber, type AnimatedNumberProps } from './animated-number';
 
-export interface AnimatedBalanceProps {
-  from: number;
-  to: number;
-  duration?: number;
-  formatValue?: (n: number) => string;
-  className?: string;
+/**
+ * `AnimatedBalance` — convenience wrapper around `<AnimatedNumber>` that
+ * formats the value as a localized currency string.
+ *
+ * Pass any locale + ISO 4217 currency code; both default to US English / USD.
+ */
+export interface AnimatedBalanceProps extends Omit<AnimatedNumberProps, 'format'> {
+  /** ISO 4217 currency code. Defaults to `'USD'`. */
+  currency?: string;
+  /** BCP 47 locale. Defaults to `'en-US'`. */
+  locale?: string;
 }
 
-const defaultFormat = (n: number) => n.toLocaleString();
-
 export function AnimatedBalance({
-  from,
-  to,
-  duration = 1500,
-  formatValue = defaultFormat,
-  className,
+  currency = 'USD',
+  locale = 'en-US',
+  ...rest
 }: AnimatedBalanceProps) {
-  const [value, setValue] = useState(from);
-  const rafRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    if (duration === 0) {
-      setValue(to);
-      return;
-    }
-    const start = performance.now();
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3);
-      setValue(from + (to - from) * eased);
-      if (t < 1) rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-    };
-  }, [from, to, duration]);
-
-  return (
-    <motion.span
-      className={className}
-      initial={{ scale: 0.95 }}
-      animate={{ scale: 1 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-    >
-      {formatValue(Math.round(value))}
-    </motion.span>
-  );
+  const fmt = new Intl.NumberFormat(locale, { style: 'currency', currency });
+  return <AnimatedNumber {...rest} format={(n) => fmt.format(n)} />;
 }

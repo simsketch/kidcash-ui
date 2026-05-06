@@ -1,30 +1,9 @@
-// Components (filled in by component extraction tasks)
-export { AnimatedBalance } from './components/animated-balance';
-export type { AnimatedBalanceProps } from './components/animated-balance';
-export { Confetti } from './components/confetti';
-export type { ConfettiProps } from './components/confetti';
-export { FloatingCoins } from './components/floating-coins';
-export type { FloatingCoinsProps } from './components/floating-coins';
-export { ProgressBar } from './components/progress-bar';
-export type { ProgressBarProps } from './components/progress-bar';
-export { ToastProvider, useToast } from './components/toast';
-export type { ToastVariant, ToastOptions, ToastContextValue } from './components/toast';
-export { EmojiPicker, defaultEmojis } from './components/emoji-picker';
-export type { EmojiPickerProps } from './components/emoji-picker';
-export { BackToTop } from './components/back-to-top';
-export type { BackToTopProps } from './components/back-to-top';
-export { ThemeToggle } from './components/theme-toggle';
-export type { Theme, ThemeToggleProps } from './components/theme-toggle';
-export { KidAvatar } from './components/kid-avatar';
-export type { KidAvatarProps } from './components/kid-avatar';
-export { AchievementBadge, AchievementBadgeGrid, defaultBadges } from './components/achievement-badge';
-export type { BadgeDef, AchievementBadgeProps, AchievementBadgeGridProps } from './components/achievement-badge';
-export { BirthdayCountdown } from './components/birthday-countdown';
-export type { BirthdayCountdownProps } from './components/birthday-countdown';
-export { CelebrationOverlay } from './components/celebration-overlay';
-export type { CelebrationOverlayProps } from './components/celebration-overlay';
+// ============================================================================
+// @kidcash/ui — public API
+// Foundation primitives first; everything else alphabetical.
+// ============================================================================
 
-// Foundation v2 — new primitives (Pass 1)
+// ---- Foundation primitives (Pass 1) ----
 export { GlassCard } from './components/glass-card';
 export type { GlassCardProps } from './components/glass-card';
 export { Button } from './components/button';
@@ -34,5 +13,60 @@ export type { GradientTextProps } from './components/gradient-text';
 export { AnimatedNumber } from './components/animated-number';
 export type { AnimatedNumberProps } from './components/animated-number';
 
-// Tokens
+// ---- Components (Pass 2A — rebuilt on liquid-glass foundation) ----
+export {
+  AchievementBadge,
+  AchievementBadgeGrid,
+  defaultBadges,
+} from './components/achievement-badge';
+export type {
+  BadgeDef,
+  BadgeTier,
+  AchievementBadgeProps,
+  AchievementBadgeGridProps,
+} from './components/achievement-badge';
+
+export { AnimatedBalance } from './components/animated-balance';
+export type { AnimatedBalanceProps } from './components/animated-balance';
+
+export { BackToTop } from './components/back-to-top';
+export type { BackToTopProps } from './components/back-to-top';
+
+export { BirthdayCountdown } from './components/birthday-countdown';
+export type { BirthdayCountdownProps } from './components/birthday-countdown';
+
+export { CelebrationOverlay } from './components/celebration-overlay';
+export type { CelebrationOverlayProps } from './components/celebration-overlay';
+
+export { Confetti } from './components/confetti';
+export type { ConfettiProps, ConfettiIntensity } from './components/confetti';
+
+export { EmojiPicker, defaultEmojis } from './components/emoji-picker';
+export type { EmojiPickerProps } from './components/emoji-picker';
+
+export { FloatingCoins } from './components/floating-coins';
+export type { FloatingCoinsProps, FloatingCoinsVariant } from './components/floating-coins';
+
+export { KidAvatar } from './components/kid-avatar';
+export type { KidAvatarProps, KidAvatarSize, KidAvatarVariant } from './components/kid-avatar';
+
+export { ProgressBar } from './components/progress-bar';
+export type {
+  ProgressBarProps,
+  ProgressBarVariant,
+  ProgressBarSize,
+} from './components/progress-bar';
+
+export { ThemeToggle } from './components/theme-toggle';
+export type { Theme, ThemeToggleProps } from './components/theme-toggle';
+
+export { ToastProvider, useToast } from './components/toast';
+export type {
+  ToastVariant,
+  ToastOptions,
+  ToastContextValue,
+  ToastItem,
+} from './components/toast';
+
+// ---- Tokens ----
 export * from './tokens';

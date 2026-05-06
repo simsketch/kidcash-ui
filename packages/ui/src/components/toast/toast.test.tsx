@@ -1,10 +1,11 @@
 import { render, screen, act } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { ToastProvider, useToast } from './index';
+import type { ToastOptions } from './types';
 
-function TriggerButton({ message, duration }: { message: string; duration?: number }) {
+function TriggerButton({ message, opts }: { message: string; opts?: ToastOptions }) {
   const { toast } = useToast();
-  return <button onClick={() => toast(message, { duration })}>Fire</button>;
+  return <button onClick={() => toast(message, opts)}>Fire</button>;
 }
 
 describe('Toast', () => {
@@ -34,7 +35,7 @@ describe('Toast', () => {
     vi.useFakeTimers();
     render(
       <ToastProvider>
-        <TriggerButton message="Bye" duration={1000} />
+        <TriggerButton message="Bye" opts={{ duration: 1000 }} />
       </ToastProvider>,
     );
     act(() => {
@@ -63,5 +64,22 @@ describe('Toast', () => {
     });
     expect(screen.getByText('One')).toBeInTheDocument();
     expect(screen.getByText('Two')).toBeInTheDocument();
+  });
+
+  it('renders title + description when provided', () => {
+    render(
+      <ToastProvider>
+        <TriggerButton
+          message="Goal complete"
+          opts={{ title: 'Goal reached!', description: 'Great work today.' }}
+        />
+      </ToastProvider>,
+    );
+    act(() => {
+      screen.getByText('Fire').click();
+    });
+    expect(screen.getByText('Goal reached!')).toBeInTheDocument();
+    expect(screen.getByText('Goal complete')).toBeInTheDocument();
+    expect(screen.getByText('Great work today.')).toBeInTheDocument();
   });
 });

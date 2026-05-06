@@ -32,4 +32,12 @@ describe('<Confetti>', () => {
     const { container } = render(<Confetti trigger={false} />);
     expect(container.firstChild).toBeNull();
   });
+
+  it('passes the chosen intensity to canvas-confetti', async () => {
+    const confetti = (await import('canvas-confetti')).default as unknown as ReturnType<typeof vi.fn>;
+    render(<Confetti trigger={true} intensity="wild" />);
+    expect(confetti).toHaveBeenCalledWith(
+      expect.objectContaining({ particleCount: 200, spread: 100 }),
+    );
+  });
 });

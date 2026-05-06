@@ -34,4 +34,14 @@ describe('<KidAvatar>', () => {
     const { container } = render(<KidAvatar emoji="🦄" className="custom-x" />);
     expect(container.firstChild).toHaveClass('custom-x');
   });
+
+  it('renders a halo div', () => {
+    render(<KidAvatar emoji="🦄" />);
+    expect(screen.getByTestId('kid-avatar-halo')).toBeInTheDocument();
+  });
+
+  it('uses the aurora-gradient surface for the vibrant variant', () => {
+    const { container } = render(<KidAvatar emoji="🦄" variant="vibrant" />);
+    expect(container.querySelector('.bg-gradient-aurora')).toBeTruthy();
+  });
 });

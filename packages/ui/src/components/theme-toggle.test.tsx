@@ -3,13 +3,13 @@ import { describe, it, expect, vi } from 'vitest';
 import { ThemeToggle } from './theme-toggle';
 
 describe('<ThemeToggle>', () => {
-  it('renders the icon for the current theme', () => {
+  it('exposes the current theme via aria-label', () => {
     const { rerender } = render(<ThemeToggle theme="light" onChange={() => {}} />);
-    expect(screen.getByText('☀️')).toBeInTheDocument();
+    expect(screen.getByLabelText('Theme: light')).toBeInTheDocument();
     rerender(<ThemeToggle theme="dark" onChange={() => {}} />);
-    expect(screen.getByText('🌙')).toBeInTheDocument();
+    expect(screen.getByLabelText('Theme: dark')).toBeInTheDocument();
     rerender(<ThemeToggle theme="system" onChange={() => {}} />);
-    expect(screen.getByText('🖥️')).toBeInTheDocument();
+    expect(screen.getByLabelText('Theme: system')).toBeInTheDocument();
   });
 
   it('cycles to the next theme on click', () => {
