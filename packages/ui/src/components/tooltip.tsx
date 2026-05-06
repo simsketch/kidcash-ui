@@ -3,10 +3,12 @@ import {
   cloneElement,
   isValidElement,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type ReactElement,
 } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { spring } from '../tokens/motion';
 
@@ -28,9 +30,9 @@ interface Coords {
 
 /**
  * `Tooltip` — wraps a single child element and shows a small glass-strong
- * tooltip on hover / focus. Position is computed at show-time from the
- * trigger element's bounding rect; rendered as a `position: fixed` overlay
- * (no portal library needed).
+ * tooltip on hover / focus. Positioned via the trigger's bounding rect and
+ * rendered in a `document.body` portal so it escapes any backdrop-filter or
+ * overflow:hidden ancestor that would otherwise clip / mis-position it.
  */
 export function Tooltip({
   content,
@@ -42,7 +44,13 @@ export function Tooltip({
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
   const [coords, setCoords] = useState<Coords>({ top: 0, left: 0 });
+  const [mounted, setMounted] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Portal target — only available client-side.
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   function computeCoords(): Coords {
     const el = triggerRef.current;
@@ -79,7 +87,7 @@ export function Tooltip({
   }
 
   // Re-measure once the tooltip mounts (because we need its real width/height).
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (visible) {
       // Defer one frame so the tooltip ref is populated.
       const id = requestAnimationFrame(() => setCoords(computeCoords()));
@@ -101,13 +109,15 @@ export function Tooltip({
   const childProps = (children.props ?? {}) as Record<string, unknown>;
   type EvtHandler<T extends React.SyntheticEvent> = ((e: T) => void) | undefined;
 
+  // React 19: `ref` is a regular prop on the child, accessible via children.props.ref.
+  const childRef = (childProps as { ref?: unknown }).ref;
+
   const trigger = cloneElement(children as ReactElement<Record<string, unknown>>, {
     ref: (node: HTMLElement | null) => {
       triggerRef.current = node;
-      const ref = (children as { ref?: unknown }).ref;
-      if (typeof ref === 'function') ref(node);
-      else if (ref && typeof ref === 'object' && 'current' in (ref as object)) {
-        (ref as { current: HTMLElement | null }).current = node;
+      if (typeof childRef === 'function') childRef(node);
+      else if (childRef && typeof childRef === 'object' && 'current' in (childRef as object)) {
+        (childRef as { current: HTMLElement | null }).current = node;
       }
     },
     onMouseEnter: (e: React.MouseEvent) => {
@@ -128,38 +138,46 @@ export function Tooltip({
     },
   });
 
+  const tooltipNode = (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          ref={tooltipRef}
+          data-testid="tooltip-content"
+          data-position={position}
+          role="tooltip"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          transition={spring.stiff}
+          style={{
+            position: 'fixed',
+            top: coords.top,
+            left: coords.left,
+            zIndex: 9999,
+            pointerEvents: 'none',
+            backgroundColor: 'var(--theme-card-bg, rgba(20, 20, 30, 0.92))',
+            borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.18))',
+            borderWidth: 1,
+            borderStyle: 'solid',
+            color: 'var(--theme-text-primary, #fafafa)',
+            boxShadow:
+              'var(--theme-card-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 16px 48px rgba(0, 0, 0, 0.5))',
+          }}
+          className="glass-strong text-xs px-2 py-1 rounded-button whitespace-nowrap"
+        >
+          {content}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+
   return (
     <>
       {trigger}
-      <AnimatePresence>
-        {visible && (
-          <motion.div
-            ref={tooltipRef}
-            data-testid="tooltip-content"
-            data-position={position}
-            role="tooltip"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={spring.stiff}
-            style={{
-              position: 'fixed',
-              top: coords.top,
-              left: coords.left,
-              zIndex: 60,
-              pointerEvents: 'none',
-              backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.08))',
-              borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.15))',
-              color: 'var(--theme-text-primary, #fafafa)',
-              boxShadow:
-                'var(--theme-card-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 16px 48px rgba(0, 0, 0, 0.5))',
-            }}
-            className="glass-strong text-xs px-2 py-1 rounded-button whitespace-nowrap"
-          >
-            {content}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {mounted && typeof document !== 'undefined'
+        ? createPortal(tooltipNode, document.body)
+        : tooltipNode}
     </>
   );
 }

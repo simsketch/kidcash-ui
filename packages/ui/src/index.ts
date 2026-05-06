@@ -51,6 +51,9 @@ export type { EmojiPickerProps } from './components/emoji-picker';
 export { FloatingCoins } from './components/floating-coins';
 export type { FloatingCoinsProps, FloatingCoinsVariant } from './components/floating-coins';
 
+export { FlyingMascot } from './components/flying-mascot';
+export type { FlyingMascotProps } from './components/flying-mascot';
+
 export { Keyboard } from './components/keyboard';
 export type { KeyboardProps } from './components/keyboard';
 

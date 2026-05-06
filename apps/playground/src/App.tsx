@@ -33,6 +33,7 @@ import {
   Keyboard,
   Marquee,
   Spotlight,
+  FlyingMascot,
 } from '@kidcash/ui';
 
 const variants = ['primary', 'secondary', 'ghost', 'destructive'] as const;
@@ -381,7 +382,12 @@ function PlaygroundInner() {
   const [plainValue, setPlainValue] = useState(42);
   const [loading, setLoading] = useState(false);
 
-  const [confettiIntensity, setConfettiIntensity] = useState<ConfettiIntensity | null>(null);
+  const [confettiIntensity, setConfettiIntensity] = useState<ConfettiIntensity>('normal');
+  const [confettiKey, setConfettiKey] = useState(0);
+  const fireConfetti = (level: ConfettiIntensity) => {
+    setConfettiIntensity(level);
+    setConfettiKey((k) => k + 1);
+  };
 
   const [coinsVariant, setCoinsVariant] = useState<FloatingCoinsVariant | null>(null);
 
@@ -410,6 +416,9 @@ function PlaygroundInner() {
         color: 'var(--theme-text-primary)',
       }}
     >
+      {/* Flying mascot — sweeps across the hero */}
+      <FlyingMascot src="/mascot.png" alt="" top="6rem" size={80} duration={12} />
+
       {/* Theme-driven ambient orbs */}
       <div aria-hidden className="fixed inset-0 -z-10 pointer-events-none">
         <div
@@ -437,13 +446,13 @@ function PlaygroundInner() {
         />
       )}
 
-      {/* Confetti driver */}
-      {confettiIntensity && (
+      {/* Confetti driver — `key` forces remount per click so each press fires reliably */}
+      {confettiKey > 0 && (
         <Confetti
+          key={confettiKey}
           trigger
           intensity={confettiIntensity}
           duration={1200}
-          onComplete={() => setConfettiIntensity(null)}
         />
       )}
 
@@ -461,6 +470,25 @@ function PlaygroundInner() {
             <p className="text-xl md:text-2xl text-[var(--theme-text-secondary)] max-w-2xl mx-auto leading-relaxed">
               Liquid glass. Spring physics. Apple-grade craft. Free and open source.
             </p>
+            <div className="flex justify-center">
+              <a
+                href="https://www.kidcashapp.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-strong inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-transform hover:scale-[1.03] hover:bg-[var(--theme-card-bg)]"
+                style={{ color: 'var(--theme-text-primary)' }}
+              >
+                <span aria-hidden>✨</span>
+                <span>
+                  Built for{' '}
+                  <GradientText variant="aurora" as="span" className="font-semibold">
+                    KidCash
+                  </GradientText>{' '}
+                  — a family allowance app
+                </span>
+                <span aria-hidden>→</span>
+              </a>
+            </div>
             <p className="text-sm text-[var(--theme-text-muted)] flex items-center justify-center gap-2">
               Press <Keyboard>⌘</Keyboard> <Keyboard>K</Keyboard> to open the command palette
             </p>
@@ -665,13 +693,13 @@ function PlaygroundInner() {
             subtitle="One-shot canvas burst. Pick an intensity to fire it."
           />
           <div className="flex flex-wrap gap-3">
-            <Button variant="secondary" onClick={() => setConfettiIntensity('subtle')}>
+            <Button variant="secondary" onClick={() => fireConfetti('subtle')}>
               🎉 Subtle
             </Button>
-            <Button variant="primary" onClick={() => setConfettiIntensity('normal')}>
+            <Button variant="primary" onClick={() => fireConfetti('normal')}>
               🎊 Normal
             </Button>
-            <Button variant="destructive" onClick={() => setConfettiIntensity('wild')}>
+            <Button variant="destructive" onClick={() => fireConfetti('wild')}>
               🌟 Wild
             </Button>
           </div>
@@ -1113,8 +1141,25 @@ function PlaygroundInner() {
         <PhenomenalSections />
 
         {/* ----- Footer ----- */}
-        <footer className="pt-8 pb-4 text-center text-sm text-[var(--theme-text-muted)]">
-          <span className="font-mono">@kidcash/ui</span>
+        <footer className="pt-12 pb-8 text-center space-y-5">
+          <p className="text-sm text-[var(--theme-text-muted)]">
+            Built by <span className="font-mono">@kidcash/ui</span> · MIT licensed
+          </p>
+          <div className="flex justify-center">
+            <a
+              href="https://www.kidcashapp.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex"
+            >
+              <Button variant="primary" size="lg" iconRight={<span>→</span>}>
+                Visit kidcashapp.com
+              </Button>
+            </a>
+          </div>
+          <p className="text-xs text-[var(--theme-text-muted)]">
+            The family allowance app that funded this kit.
+          </p>
         </footer>
       </div>
     </div>

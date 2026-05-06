@@ -5,7 +5,12 @@ import confetti from 'canvas-confetti';
 export type ConfettiIntensity = 'subtle' | 'normal' | 'wild';
 
 export interface ConfettiProps {
-  /** Flips false → true to fire a single burst. */
+  /**
+   * Set to `true` to fire a burst. The component fires every time `trigger`
+   * transitions from falsy → truthy, AND every time `intensity` (or any other
+   * config prop) changes while `trigger` stays truthy. To re-fire the same
+   * config repeatedly, toggle `trigger` off → on, or remount with a new `key`.
+   */
   trigger: boolean;
   /** Particle palette. */
   colors?: string[];
@@ -22,7 +27,7 @@ const DEFAULT_COLORS = [
   '#06b6d4', // cyan
   '#10b981', // emerald
   '#f59e0b', // amber
-  '#ef4444', // red (new)
+  '#ef4444', // red
 ];
 
 const INTENSITY_MAP: Record<ConfettiIntensity, { particleCount: number; spread: number }> = {
@@ -37,8 +42,8 @@ function prefersReducedMotion(): boolean {
 }
 
 /**
- * `Confetti` — fires a single canvas-confetti burst when `trigger` flips
- * from false → true. Renders no DOM. Respects prefers-reduced-motion.
+ * `Confetti` — fires a canvas-confetti burst whenever `trigger` is truthy and
+ * the effect inputs change. Renders no DOM. Respects prefers-reduced-motion.
  */
 export function Confetti({
   trigger,
@@ -47,28 +52,37 @@ export function Confetti({
   intensity = 'normal',
   onComplete,
 }: ConfettiProps) {
-  const prevTrigger = useRef(false);
+  // Stable refs for callbacks and palette so re-renders don't accidentally
+  // re-fire a burst when only the parent re-rendered with a fresh array.
+  const onCompleteRef = useRef(onComplete);
+  const colorsRef = useRef(colors);
+  const durationRef = useRef(duration);
 
   useEffect(() => {
-    if (trigger && !prevTrigger.current) {
-      if (!prefersReducedMotion()) {
-        const { particleCount, spread } = INTENSITY_MAP[intensity];
-        confetti({
-          particleCount,
-          spread,
-          origin: { y: 0.6 },
-          colors,
-          ticks: 200,
-          startVelocity: intensity === 'wild' ? 55 : 45,
-          scalar: intensity === 'wild' ? 1.2 : 1,
-        });
-      }
-      const t = setTimeout(() => onComplete?.(), duration);
-      prevTrigger.current = trigger;
-      return () => clearTimeout(t);
+    onCompleteRef.current = onComplete;
+    colorsRef.current = colors;
+    durationRef.current = duration;
+  }, [onComplete, colors, duration]);
+
+  useEffect(() => {
+    if (!trigger) return undefined;
+
+    if (!prefersReducedMotion()) {
+      const { particleCount, spread } = INTENSITY_MAP[intensity];
+      confetti({
+        particleCount,
+        spread,
+        origin: { y: 0.6 },
+        colors: colorsRef.current,
+        ticks: 200,
+        startVelocity: intensity === 'wild' ? 55 : 45,
+        scalar: intensity === 'wild' ? 1.2 : 1,
+      });
     }
-    prevTrigger.current = trigger;
-  }, [trigger, colors, duration, intensity, onComplete]);
+
+    const t = setTimeout(() => onCompleteRef.current?.(), durationRef.current);
+    return () => clearTimeout(t);
+  }, [trigger, intensity]);
 
   return null;
 }
