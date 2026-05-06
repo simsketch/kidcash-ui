@@ -68,5 +68,24 @@ export type {
   ToastItem,
 } from './components/toast';
 
+// ---- Components (Pass 2B — generic primitives) ----
+export { Pill } from './components/pill';
+export type { PillProps, PillVariant, PillSize } from './components/pill';
+
+export { Tooltip } from './components/tooltip';
+export type { TooltipProps, TooltipPosition } from './components/tooltip';
+
+export { Skeleton } from './components/skeleton';
+export type { SkeletonProps, SkeletonShape } from './components/skeleton';
+
+export { Sheet } from './components/sheet';
+export type { SheetProps } from './components/sheet';
+
+export { Slider } from './components/slider';
+export type { SliderProps } from './components/slider';
+
+export { Avatar, AvatarStack } from './components/avatar';
+export type { AvatarProps, AvatarStackProps, AvatarSize } from './components/avatar';
+
 // ---- Tokens ----
 export * from './tokens';

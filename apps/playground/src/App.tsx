@@ -22,6 +22,13 @@ import {
   defaultBadges,
   BirthdayCountdown,
   CelebrationOverlay,
+  Pill,
+  Tooltip,
+  Skeleton,
+  Sheet,
+  Slider,
+  Avatar,
+  AvatarStack,
 } from '@kidcash/ui';
 
 const variants = ['primary', 'secondary', 'ghost', 'destructive'] as const;
@@ -116,6 +123,13 @@ export function App() {
   const [unlockedCount, setUnlockedCount] = useState(4);
 
   const [celebrationOpen, setCelebrationOpen] = useState(false);
+
+  // ---- Pass 2B state ----
+  const [pillTags, setPillTags] = useState<string[]>(['allowance', 'savings', 'chores']);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [slider1, setSlider1] = useState(50);
+  const [slider2, setSlider2] = useState(75);
+  const [slider3, setSlider3] = useState(25);
 
   const badges = defaultBadges.map((b, i) => ({ ...b, unlocked: i < unlockedCount }));
 
@@ -618,9 +632,262 @@ export function App() {
             />
           </GlassCard>
 
+          {/* =============================== */}
+          {/* PASS 2B — GENERIC PRIMITIVES    */}
+          {/* =============================== */}
+
+          <div className="text-center pt-8 pb-2">
+            <GradientText
+              variant="aurora"
+              as="h2"
+              className="text-5xl font-bold tracking-tight"
+            >
+              Pass 2B · Generic primitives
+            </GradientText>
+            <p className="text-text-muted mt-2">
+              Six small workhorse components. Tags, tooltips, loaders, sheets, sliders, avatars.
+            </p>
+          </div>
+
+          {/* ----- Pill ----- */}
+          <GlassCard variant="default" className="!p-10 space-y-6 mb-12">
+            <SectionHeader
+              title="Pill"
+              variant="aurora"
+              subtitle="Tags / chips / status pills. Six variants × three sizes. Optional icons + remove button."
+            />
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+                  Variants × sizes
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {(['default', 'primary', 'success', 'warning', 'danger', 'gradient'] as const).map(
+                    (v) => (
+                      <div key={v} className="flex flex-wrap items-center gap-2">
+                        <Pill variant={v} size="sm">
+                          {v}
+                        </Pill>
+                        <Pill variant={v} size="md">
+                          {v}
+                        </Pill>
+                        <Pill variant={v} size="lg">
+                          {v}
+                        </Pill>
+                      </div>
+                    ),
+                  )}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+                  With leading icon
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Pill variant="danger" iconLeft={<span>🔥</span>}>
+                    Hot streak
+                  </Pill>
+                  <Pill variant="success" iconLeft={<span>✓</span>}>
+                    Verified
+                  </Pill>
+                  <Pill variant="gradient" iconLeft={<span>⚡</span>} size="lg">
+                    Premium
+                  </Pill>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+                  Removable
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {pillTags.map((t) => (
+                    <Pill
+                      key={t}
+                      variant="primary"
+                      removable
+                      onRemove={() => setPillTags((tags) => tags.filter((x) => x !== t))}
+                    >
+                      {t}
+                    </Pill>
+                  ))}
+                  {pillTags.length === 0 && (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setPillTags(['allowance', 'savings', 'chores'])}
+                    >
+                      Reset tags
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </GlassCard>
+
+          {/* ----- Tooltip ----- */}
+          <GlassCard variant="default" className="!p-10 space-y-6 mb-12">
+            <SectionHeader
+              title="Tooltip"
+              variant="forest"
+              subtitle="Hover or focus to reveal. Spring entrance, glass-strong surface, 300ms default delay."
+            />
+            <div className="flex flex-wrap gap-6 py-6">
+              <Tooltip content="Anchored to the top edge" position="top">
+                <Button variant="secondary">Top</Button>
+              </Tooltip>
+              <Tooltip content="Drops below the trigger" position="bottom">
+                <Button variant="secondary">Bottom</Button>
+              </Tooltip>
+              <Tooltip content="Floats out to the right" position="right">
+                <Button variant="secondary">Right</Button>
+              </Tooltip>
+              <Tooltip content="No delay — instant" position="top" delay={0}>
+                <Button variant="primary">Instant</Button>
+              </Tooltip>
+            </div>
+          </GlassCard>
+
+          {/* ----- Skeleton ----- */}
+          <GlassCard variant="default" className="!p-10 space-y-6 mb-12">
+            <SectionHeader
+              title="Skeleton"
+              variant="sunset"
+              subtitle="Loading placeholders. Subtle glass background plus a moving shimmer overlay."
+            />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-3">
+                <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+                  rect
+                </p>
+                <Skeleton width="100%" height={120} />
+              </div>
+              <div className="space-y-3">
+                <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+                  circle
+                </p>
+                <Skeleton shape="circle" width={80} height={80} />
+              </div>
+              <div className="space-y-3">
+                <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+                  text · 3 lines
+                </p>
+                <Skeleton shape="text" count={3} />
+              </div>
+            </div>
+          </GlassCard>
+
+          {/* ----- Sheet ----- */}
+          <GlassCard variant="default" className="!p-10 space-y-6 mb-12">
+            <SectionHeader
+              title="Sheet"
+              variant="flame"
+              subtitle="Generic iOS-style overlay. Docks against any edge with a spring slide-in."
+            />
+            <div className="flex flex-wrap gap-3">
+              <Button variant="primary" onClick={() => setSheetOpen(true)}>
+                Open sheet
+              </Button>
+            </div>
+            <Sheet open={sheetOpen} onClose={() => setSheetOpen(false)} title="About this sheet">
+              <div className="space-y-4 text-text-muted text-sm leading-relaxed">
+                <p>
+                  This is the generic <code className="text-text-light font-mono">Sheet</code>{' '}
+                  primitive — the same pattern the EmojiPicker uses internally, exposed for any
+                  modal/drawer use case.
+                </p>
+                <p>
+                  It takes a <code className="text-text-light font-mono">position</code> (top /
+                  bottom / left / right), an optional title, an optional drag handle, and standard
+                  open / onClose props. Click outside or press Escape to dismiss.
+                </p>
+                <p>
+                  Spring physics on the slide-in, glass-strong backdrop with backdrop-blur, and a
+                  rounded-card-lg corner on whichever edge is exposed.
+                </p>
+                <div className="pt-2">
+                  <Button variant="primary" onClick={() => setSheetOpen(false)}>
+                    Got it
+                  </Button>
+                </div>
+              </div>
+            </Sheet>
+          </GlassCard>
+
+          {/* ----- Slider ----- */}
+          <GlassCard variant="default" className="!p-10 space-y-6 mb-12">
+            <SectionHeader
+              title="Slider"
+              variant="aurora"
+              subtitle="Apple-style range. Glass track, gradient fill, glowing thumb. Three variants."
+            />
+            <div className="space-y-6 max-w-xl">
+              <Slider
+                value={slider1}
+                onChange={setSlider1}
+                label="Primary · allowance"
+                showValue
+                variant="primary"
+              />
+              <Slider
+                value={slider2}
+                onChange={setSlider2}
+                label="Success · savings goal"
+                showValue
+                variant="success"
+              />
+              <Slider
+                value={slider3}
+                onChange={setSlider3}
+                label="Flame · spending"
+                showValue
+                variant="flame"
+              />
+            </div>
+          </GlassCard>
+
+          {/* ----- Avatar ----- */}
+          <GlassCard variant="default" className="!p-10 space-y-6 mb-12">
+            <SectionHeader
+              title="Avatar"
+              variant="forest"
+              subtitle="Generic avatar (image or initials) with optional status dot. Plus an overlapping AvatarStack."
+            />
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+                  Sizes & statuses
+                </p>
+                <div className="flex flex-wrap gap-6 items-end">
+                  <Avatar fallback="EZ" size="xs" status="online" />
+                  <Avatar fallback="LM" size="sm" status="busy" />
+                  <Avatar fallback="JK" size="md" status="away" />
+                  <Avatar fallback="MR" size="lg" status="offline" />
+                  <Avatar fallback="OS" size="xl" status="online" />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+                  Stack of 6 (max=4)
+                </p>
+                <AvatarStack
+                  size="md"
+                  max={4}
+                  avatars={[
+                    { fallback: 'A' },
+                    { fallback: 'B' },
+                    { fallback: 'C' },
+                    { fallback: 'D' },
+                    { fallback: 'E' },
+                    { fallback: 'F' },
+                  ]}
+                />
+              </div>
+            </div>
+          </GlassCard>
+
           {/* ----- Footer ----- */}
           <footer className="pt-8 pb-4 text-center text-sm text-text-muted">
-            Pass 2A — Components rebuilt on liquid-glass foundation ·{' '}
+            Pass 2B — Generic primitives ·{' '}
             <span className="font-mono">@kidcash/ui</span>
           </footer>
         </div>
