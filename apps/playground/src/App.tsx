@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   GlassCard,
   Button,
@@ -29,6 +29,12 @@ import {
   Slider,
   Avatar,
   AvatarStack,
+  CommandPalette,
+  type CommandItem,
+  Modal,
+  Kbd,
+  Marquee,
+  Spotlight,
 } from '@kidcash/ui';
 
 const variants = ['primary', 'secondary', 'ghost', 'destructive'] as const;
@@ -99,6 +105,279 @@ function ToastDemo() {
   );
 }
 
+// ----- Pass 3 driver (needs toast hook for command palette feedback) -----
+function Pass3Sections() {
+  const { toast } = useToast();
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // Global Cmd+K / Ctrl+K toggle.
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setPaletteOpen((v) => !v);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
+  const fire = (label: string) =>
+    toast(`Triggered: ${label}`, { variant: 'success', icon: '⚡' });
+
+  const commands: CommandItem[] = [
+    {
+      id: 'new-goal',
+      label: 'New Goal',
+      description: 'Start a new savings goal',
+      icon: <span>🎯</span>,
+      shortcut: ['G'],
+      group: 'Actions',
+      onSelect: () => fire('New Goal'),
+    },
+    {
+      id: 'add-kid',
+      label: 'Add Kid',
+      description: 'Add a kid to your family account',
+      icon: <span>👶</span>,
+      shortcut: ['K'],
+      group: 'Actions',
+      onSelect: () => fire('Add Kid'),
+    },
+    {
+      id: 'log-allowance',
+      label: 'Log Allowance',
+      description: 'Record an allowance payment',
+      icon: <span>💵</span>,
+      shortcut: ['A'],
+      group: 'Actions',
+      onSelect: () => fire('Log Allowance'),
+    },
+    {
+      id: 'export',
+      label: 'Export Data',
+      description: 'Download a JSON snapshot',
+      icon: <span>📦</span>,
+      shortcut: ['⌘', 'E'],
+      group: 'Actions',
+      onSelect: () => fire('Export Data'),
+    },
+    {
+      id: 'dashboard',
+      label: 'Go to Dashboard',
+      description: 'Jump to the main view',
+      icon: <span>🏠</span>,
+      shortcut: ['G', 'D'],
+      group: 'Navigation',
+      onSelect: () => fire('Dashboard'),
+    },
+    {
+      id: 'settings',
+      label: 'Settings',
+      description: 'Open settings page',
+      icon: <span>⚙️</span>,
+      shortcut: ['⌘', ','],
+      group: 'Navigation',
+      onSelect: () => fire('Settings'),
+    },
+    {
+      id: 'kids',
+      label: 'Kids',
+      description: 'See your kids',
+      icon: <span>🧒</span>,
+      group: 'Navigation',
+      onSelect: () => fire('Kids'),
+    },
+    {
+      id: 'sign-out',
+      label: 'Sign Out',
+      description: 'Log out of your account',
+      icon: <span>🚪</span>,
+      shortcut: ['⌘', '⇧', 'Q'],
+      group: 'Account',
+      onSelect: () => fire('Sign Out'),
+    },
+  ];
+
+  return (
+    <>
+      {/* ----- Command Palette ----- */}
+      <GlassCard variant="strong" glow="primary" className="!p-10 space-y-6 mb-12">
+        <SectionHeader
+          title="Command palette"
+          variant="aurora"
+          subtitle="The signature feature. Cmd+K (or Ctrl+K) anywhere to open. Arrow keys, Enter to select, Esc to close."
+        />
+        <div className="flex flex-wrap gap-3 items-center">
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={() => setPaletteOpen(true)}
+            iconLeft={<span>⌘</span>}
+          >
+            Open Command Palette
+          </Button>
+          <span className="text-sm text-text-muted flex items-center gap-2">
+            or press <Kbd>⌘</Kbd> <Kbd>K</Kbd>
+          </span>
+        </div>
+        <CommandPalette
+          open={paletteOpen}
+          onClose={() => setPaletteOpen(false)}
+          items={commands}
+        />
+      </GlassCard>
+
+      {/* ----- Modal ----- */}
+      <GlassCard variant="default" className="!p-10 space-y-6 mb-12">
+        <SectionHeader
+          title="Modal"
+          variant="sunset"
+          subtitle="Generic centered modal. Glass-strong panel, spring entrance, optional title + description + close button."
+        />
+        <div className="flex flex-wrap gap-3">
+          <Button variant="primary" onClick={() => setModalOpen(true)}>
+            Open Modal
+          </Button>
+        </div>
+        <Modal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          title="Confirm action"
+          description="This is the generic Modal primitive — escape, click outside, or hit close to dismiss."
+          size="md"
+        >
+          <div className="space-y-4 text-text-muted text-sm leading-relaxed">
+            <p>
+              Use it for confirmation dialogs, settings panels, sign-up forms — anywhere
+              you'd reach for a centered overlay. Spring physics on the entrance and a
+              glass-strong backdrop keep it feeling premium.
+            </p>
+            <div className="flex justify-end gap-2 pt-2">
+              <Button variant="ghost" onClick={() => setModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={() => setModalOpen(false)}>
+                Confirm
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      </GlassCard>
+
+      {/* ----- Kbd ----- */}
+      <GlassCard variant="default" className="!p-10 space-y-6 mb-12">
+        <SectionHeader
+          title="Kbd"
+          variant="forest"
+          subtitle="Tiny keyboard chips for shortcut hints. Mono font, glass background, inset shadow so they read like physical keys."
+        />
+        <div className="space-y-4">
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="text-text-muted">Open command palette:</span>
+            <span className="inline-flex gap-1">
+              <Kbd>⌘</Kbd>
+              <Kbd>K</Kbd>
+            </span>
+          </div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="text-text-muted">Quick switcher:</span>
+            <span className="inline-flex gap-1">
+              <Kbd>⌘</Kbd>
+              <Kbd>⇧</Kbd>
+              <Kbd>P</Kbd>
+            </span>
+          </div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="text-text-muted">Cancel / dismiss:</span>
+            <Kbd>Esc</Kbd>
+          </div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="text-text-muted">Confirm:</span>
+            <Kbd>↩</Kbd>
+          </div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="text-text-muted">Sizes:</span>
+            <Kbd size="sm">sm</Kbd>
+            <Kbd size="md">md</Kbd>
+          </div>
+        </div>
+      </GlassCard>
+
+      {/* ----- Marquee ----- */}
+      <GlassCard variant="default" className="!p-10 space-y-6 mb-12">
+        <SectionHeader
+          title="Marquee"
+          variant="flame"
+          subtitle="Infinite horizontal scroll. Children duplicated for a seamless loop. Pause on hover, fade-edge mask, configurable speed."
+        />
+        <div className="space-y-6">
+          <Marquee speed={28}>
+            <Pill variant="default" iconLeft={<span>💵</span>}>
+              Allowances
+            </Pill>
+            <Pill variant="primary" iconLeft={<span>🎯</span>}>
+              Savings goals
+            </Pill>
+            <Pill variant="success" iconLeft={<span>✓</span>}>
+              Verified
+            </Pill>
+            <Pill variant="warning" iconLeft={<span>🔔</span>}>
+              Reminders
+            </Pill>
+            <Pill variant="danger" iconLeft={<span>🔥</span>}>
+              Hot streak
+            </Pill>
+            <Pill variant="gradient" iconLeft={<span>⭐</span>}>
+              Premium
+            </Pill>
+          </Marquee>
+          <Marquee speed={36} direction="right">
+            <Pill variant="gradient">Stripe-style</Pill>
+            <Pill variant="default">Aceternity-style</Pill>
+            <Pill variant="primary">Linear-style</Pill>
+            <Pill variant="success">Vercel-style</Pill>
+            <Pill variant="warning">Raycast-style</Pill>
+            <Pill variant="danger">Apple-style</Pill>
+          </Marquee>
+        </div>
+      </GlassCard>
+
+      {/* ----- Spotlight ----- */}
+      <GlassCard variant="default" className="!p-10 space-y-6 mb-12">
+        <SectionHeader
+          title="Spotlight"
+          variant="aurora"
+          subtitle="Mouse-following radial highlight. Hover the card and a soft glow tracks the cursor — premium feel, pure CSS gradient."
+        />
+        <Spotlight
+          color="rgba(139, 92, 246, 0.35)"
+          size={520}
+          className="rounded-card-lg"
+        >
+          <div className="glass-strong rounded-card-lg p-12 text-center space-y-3">
+            <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+              Hover anywhere on this card
+            </p>
+            <GradientText
+              variant="aurora"
+              as="h3"
+              className="text-4xl font-bold tracking-tight"
+            >
+              The cursor lights it up.
+            </GradientText>
+            <p className="text-text-muted max-w-md mx-auto">
+              Use Spotlight on hero sections, pricing cards, or anywhere you want
+              a little extra polish. It works great over glass surfaces.
+            </p>
+          </div>
+        </Spotlight>
+      </GlassCard>
+    </>
+  );
+}
+
 export function App() {
   // ---- Pass 1 state ----
   const [value, setValue] = useState(1234.56);
@@ -166,27 +445,32 @@ export function App() {
         )}
 
         <div className="max-w-5xl mx-auto px-6 py-24 space-y-12">
-          {/* ----- Hero ----- */}
-          <header className="text-center space-y-6 mb-12">
-            <GradientText
-              variant="animated"
-              as="h1"
-              className="text-7xl md:text-8xl font-bold tracking-tight leading-none"
-            >
-              KidCash UI
-            </GradientText>
-            <p className="text-xl md:text-2xl text-text-muted max-w-2xl mx-auto leading-relaxed">
-              Liquid glass. Spring physics. Apple-grade craft. Free and open source.
-            </p>
-            <div className="flex items-center justify-center gap-3 pt-4">
-              <Button size="lg" iconLeft={<span>✨</span>}>
-                Get started
-              </Button>
-              <Button size="lg" variant="secondary">
-                Read the docs
-              </Button>
-            </div>
-          </header>
+          {/* ----- Hero (wrapped in Spotlight) ----- */}
+          <Spotlight color="rgba(139, 92, 246, 0.3)" size={800} className="mb-12">
+            <header className="text-center space-y-6 py-16">
+              <GradientText
+                variant="animated"
+                as="h1"
+                className="text-7xl md:text-8xl font-bold tracking-tight leading-none"
+              >
+                KidCash UI
+              </GradientText>
+              <p className="text-xl md:text-2xl text-text-muted max-w-2xl mx-auto leading-relaxed">
+                Liquid glass. Spring physics. Apple-grade craft. Free and open source.
+              </p>
+              <p className="text-sm text-text-muted flex items-center justify-center gap-2">
+                Press <Kbd>⌘</Kbd> <Kbd>K</Kbd> to open the command palette
+              </p>
+              <div className="flex items-center justify-center gap-3 pt-4">
+                <Button size="lg" iconLeft={<span>✨</span>}>
+                  Get started
+                </Button>
+                <Button size="lg" variant="secondary">
+                  Read the docs
+                </Button>
+              </div>
+            </header>
+          </Spotlight>
 
           {/* =============================== */}
           {/* PASS 1 — FOUNDATION PRIMITIVES  */}
@@ -885,9 +1169,28 @@ export function App() {
             </div>
           </GlassCard>
 
+          {/* =============================== */}
+          {/* PASS 3 — PHENOMENAL              */}
+          {/* =============================== */}
+
+          <div className="text-center pt-8 pb-2">
+            <GradientText
+              variant="animated"
+              as="h2"
+              className="text-5xl font-bold tracking-tight"
+            >
+              Pass 3 · Phenomenal
+            </GradientText>
+            <p className="text-text-muted mt-2">
+              The marquee components. Cmd+K palette, modal, kbd chips, marquee, spotlight.
+            </p>
+          </div>
+
+          <Pass3Sections />
+
           {/* ----- Footer ----- */}
           <footer className="pt-8 pb-4 text-center text-sm text-text-muted">
-            Pass 2B — Generic primitives ·{' '}
+            Pass 3 — 27 components ·{' '}
             <span className="font-mono">@kidcash/ui</span>
           </footer>
         </div>

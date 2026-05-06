@@ -87,5 +87,21 @@ export type { SliderProps } from './components/slider';
 export { Avatar, AvatarStack } from './components/avatar';
 export type { AvatarProps, AvatarStackProps, AvatarSize } from './components/avatar';
 
+// ---- Components (Pass 3 — phenomenal) ----
+export { CommandPalette } from './components/command-palette';
+export type { CommandPaletteProps, CommandItem } from './components/command-palette';
+
+export { Modal } from './components/modal';
+export type { ModalProps, ModalSize } from './components/modal';
+
+export { Kbd } from './components/kbd';
+export type { KbdProps } from './components/kbd';
+
+export { Marquee } from './components/marquee';
+export type { MarqueeProps } from './components/marquee';
+
+export { Spotlight } from './components/spotlight';
+export type { SpotlightProps } from './components/spotlight';
+
 // ---- Tokens ----
 export * from './tokens';
