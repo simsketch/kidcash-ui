@@ -120,13 +120,13 @@
 
 /* ----- Vibrant gradient backgrounds ----- */
 @utility bg-gradient-aurora {
-  background-image: linear-gradient(135deg, #a78bfa 0%, #c084fc 25%, #e879f9 50%, #67e8f9 75%, #22d3ee 100%);
+  background-image: linear-gradient(135deg, #7c3aed 0%, #a855f7 20%, #c026d3 40%, #ec4899 55%, #8b5cf6 75%, #06b6d4 100%);
 }
 
 @utility bg-gradient-aurora-animated {
-  background: linear-gradient(90deg, #a78bfa, #c084fc, #e879f9, #67e8f9, #22d3ee, #a78bfa);
+  background: linear-gradient(90deg, #7c3aed, #a855f7, #c026d3, #ec4899, #8b5cf6, #06b6d4, #7c3aed);
   background-size: 300% 100%;
-  animation: gradient-flow 4s linear infinite;
+  animation: gradient-flow 5s linear infinite;
 }
 
 @utility bg-gradient-sunset {
@@ -151,7 +151,7 @@
 
 /* ----- Gradient text ----- */
 @utility text-gradient-aurora {
-  background-image: linear-gradient(135deg, #a78bfa 0%, #c084fc 25%, #e879f9 50%, #67e8f9 75%, #22d3ee 100%);
+  background-image: linear-gradient(135deg, #7c3aed 0%, #a855f7 20%, #c026d3 40%, #ec4899 55%, #8b5cf6 75%, #06b6d4 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -179,12 +179,12 @@
 }
 
 @utility text-gradient-animated {
-  background: linear-gradient(135deg, #a78bfa, #c084fc, #e879f9, #67e8f9, #22d3ee, #a78bfa);
+  background: linear-gradient(135deg, #7c3aed, #a855f7, #c026d3, #ec4899, #8b5cf6, #06b6d4, #7c3aed);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: gradient-flow 8s linear infinite;
+  animation: gradient-flow 10s linear infinite;
 }
 
 /* ----- Shimmer overlay ----- */

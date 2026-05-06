@@ -69,15 +69,31 @@ export function ProgressBar({
     >
       {(label || showValue) && (
         <div className="flex items-baseline justify-between mb-2">
-          {label && <div className="text-sm font-medium text-text-light">{label}</div>}
+          {label && (
+            <div
+              className="text-sm font-medium"
+              style={{ color: 'var(--theme-text-primary, #fafafa)' }}
+            >
+              {label}
+            </div>
+          )}
           {showValue && (
-            <div className="text-sm tabular-nums text-text-muted font-mono">
+            <div
+              className="text-sm tabular-nums font-mono"
+              style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+            >
               {Math.round(pct)}%
             </div>
           )}
         </div>
       )}
-      <div className={`glass ${heightClass[size]} rounded-pill overflow-hidden relative`}>
+      <div
+        className={`glass ${heightClass[size]} rounded-pill overflow-hidden relative`}
+        style={{
+          backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.05))',
+          borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.1))',
+        }}
+      >
         <motion.div
           className={`h-full rounded-pill ${fillClass} ${
             animate ? 'shimmer-overlay' : ''
@@ -85,7 +101,14 @@ export function ProgressBar({
           initial={false}
           animate={{ width: `${pct}%` }}
           transition={animate ? spring.gentle : { duration: 0 }}
-          style={{ width: `${pct}%` }}
+          style={{
+            width: `${pct}%`,
+            // Theme-aware override for the primary variant: when a theme sets
+            // --theme-progress-gradient, prefer it over the static aurora gradient.
+            ...(variant === 'primary'
+              ? { backgroundImage: 'var(--theme-progress-gradient)' }
+              : {}),
+          }}
         />
       </div>
     </div>

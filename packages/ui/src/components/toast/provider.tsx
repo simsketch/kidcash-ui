@@ -70,6 +70,13 @@ export function ToastProvider({ children, position = 'bottom' }: ToastProviderPr
               exit={{ opacity: 0, scale: 0.9 }}
               transition={spring.gentle}
               className="glass-strong rounded-card overflow-hidden pointer-events-auto relative flex"
+              style={{
+                backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.08))',
+                borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.15))',
+                color: 'var(--theme-text-primary, #fafafa)',
+                boxShadow:
+                  'var(--theme-card-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 16px 48px rgba(0, 0, 0, 0.5))',
+              }}
             >
               {/* Accent rail (4px gradient on left) */}
               <div className={`w-1 shrink-0 ${accentClass[t.variant]}`} aria-hidden />
@@ -82,19 +89,31 @@ export function ToastProvider({ children, position = 'bottom' }: ToastProviderPr
                 )}
                 <div className="min-w-0 flex-1">
                   {t.title && (
-                    <div className="font-semibold text-text-light leading-snug">{t.title}</div>
+                    <div
+                      className="font-semibold leading-snug"
+                      style={{ color: 'var(--theme-text-primary, #fafafa)' }}
+                    >
+                      {t.title}
+                    </div>
                   )}
                   <div
-                    className={
-                      t.title
-                        ? 'text-text-muted text-sm leading-snug mt-0.5'
-                        : 'text-text-light text-sm leading-snug'
-                    }
+                    className="text-sm leading-snug"
+                    style={{
+                      color: t.title
+                        ? 'var(--theme-text-muted, #a1a1aa)'
+                        : 'var(--theme-text-primary, #fafafa)',
+                      marginTop: t.title ? '0.125rem' : 0,
+                    }}
                   >
                     {t.message}
                   </div>
                   {t.description && (
-                    <div className="text-text-muted text-sm leading-snug mt-1">{t.description}</div>
+                    <div
+                      className="text-sm leading-snug mt-1"
+                      style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+                    >
+                      {t.description}
+                    </div>
                   )}
                 </div>
               </div>

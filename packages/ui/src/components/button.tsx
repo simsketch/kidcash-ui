@@ -22,9 +22,22 @@ const sizeMap: Record<Size, string> = {
 
 const variantMap: Record<Variant, string> = {
   primary: 'bg-gradient-aurora text-white shadow-glow-primary',
-  secondary: 'glass text-text-light hover:glass-strong',
-  ghost: 'text-text-light hover:bg-white/5',
+  secondary: 'glass hover:glass-strong',
+  ghost: '',
   destructive: 'bg-gradient-flame text-white',
+};
+
+const variantStyle: Record<Variant, React.CSSProperties> = {
+  primary: {},
+  secondary: {
+    backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.05))',
+    borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.1))',
+    color: 'var(--theme-text-primary, #fafafa)',
+  },
+  ghost: {
+    color: 'var(--theme-text-primary, #fafafa)',
+  },
+  destructive: {},
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -36,6 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       iconLeft,
       iconRight,
       className = '',
+      style,
       children,
       ...rest
     },
@@ -47,7 +61,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.97 }}
         transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-        className={`relative inline-flex items-center justify-center gap-2 rounded-button font-medium ${sizeMap[size]} ${variantMap[variant]} ${className} disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer`}
+        className={`relative inline-flex items-center justify-center gap-2 rounded-button font-medium ${sizeMap[size]} ${variantMap[variant]} ${variant === 'ghost' ? 'hover:bg-[var(--theme-card-hover-bg,rgba(255,255,255,0.05))]' : ''} ${className} disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer`}
+        style={{ ...variantStyle[variant], ...style }}
         disabled={loading || rest.disabled}
         {...rest}
       >

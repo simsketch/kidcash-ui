@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { spring } from '../tokens/motion';
 import { Keyboard } from './keyboard';
@@ -145,7 +146,7 @@ export function CommandPalette({
     return filteredItems.findIndex((i) => i.id === id);
   }
 
-  return (
+  const tree = (
     <AnimatePresence>
       {open && (
         <motion.div
@@ -160,9 +161,9 @@ export function CommandPalette({
           transition={{ duration: 0.18 }}
           className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] px-4"
           style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            backdropFilter: 'blur(24px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            backdropFilter: 'blur(40px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
           }}
         >
           <motion.div
@@ -173,11 +174,23 @@ export function CommandPalette({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={spring.gentle}
-            className="glass-strong rounded-card-lg w-full max-w-xl overflow-hidden shadow-glow-primary bg-bg-dark/85 border-white/15"
+            className="glass-strong rounded-card-lg w-full max-w-xl overflow-hidden shadow-glow-primary"
+            style={{
+              backgroundColor: 'var(--theme-card-bg, rgba(15, 11, 26, 0.97))',
+              borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.15))',
+              borderWidth: 1,
+              borderStyle: 'solid',
+              color: 'var(--theme-text-primary, #fafafa)',
+              boxShadow:
+                'var(--theme-card-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 24px 64px rgba(0, 0, 0, 0.6))',
+            }}
           >
             {/* Search row */}
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10">
-              <span className="text-text-muted">
+            <div
+              className="flex items-center gap-3 px-5 py-4 border-b"
+              style={{ borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.1))' }}
+            >
+              <span style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}>
                 <SearchIcon />
               </span>
               <input
@@ -187,11 +200,15 @@ export function CommandPalette({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={placeholder}
-                className="flex-1 bg-transparent border-none outline-none text-text-light text-lg placeholder:text-text-muted"
+                className="flex-1 bg-transparent border-none outline-none text-lg placeholder:opacity-60"
+                style={{ color: 'var(--theme-text-primary, #fafafa)' }}
                 autoComplete="off"
                 spellCheck={false}
               />
-              <span className="hidden sm:inline-flex items-center gap-1 text-text-muted">
+              <span
+                className="hidden sm:inline-flex items-center gap-1"
+                style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+              >
                 <Keyboard size="sm">esc</Keyboard>
               </span>
             </div>
@@ -201,7 +218,8 @@ export function CommandPalette({
               {filteredItems.length === 0 && (
                 <div
                   data-testid="command-palette-empty"
-                  className="px-5 py-8 text-center text-text-muted text-sm"
+                  className="px-5 py-8 text-center text-sm"
+                  style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
                 >
                   {emptyMessage}
                 </div>
@@ -210,7 +228,10 @@ export function CommandPalette({
               {grouped.map(([group, groupItems]) => (
                 <div key={group} className="px-2">
                   {showHeaders && group !== '__default__' && (
-                    <div className="px-3 pt-3 pb-1 text-xs uppercase tracking-widest text-text-muted font-mono">
+                    <div
+                      className="px-3 pt-3 pb-1 text-xs uppercase tracking-widest font-mono"
+                      style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+                    >
                       {group}
                     </div>
                   )}
@@ -230,23 +251,35 @@ export function CommandPalette({
                             onClose();
                           }}
                           onMouseEnter={() => setSelectedIndex(idx)}
-                          className={`flex items-center gap-3 px-3 py-2.5 rounded-button cursor-pointer transition-colors ${
-                            isSelected
-                              ? 'bg-white/10 border-l-2 border-primary-light'
-                              : 'border-l-2 border-transparent hover:bg-white/5'
+                          className={`flex items-center gap-3 px-3 py-2.5 rounded-button cursor-pointer transition-colors border-l-2 ${
+                            isSelected ? 'border-primary-light' : 'border-transparent'
                           }`}
+                          style={{
+                            backgroundColor: isSelected
+                              ? 'var(--theme-card-hover-bg, rgba(255, 255, 255, 0.1))'
+                              : 'transparent',
+                          }}
                         >
                           {item.icon && (
-                            <span className="w-5 h-5 inline-flex items-center justify-center text-text-muted shrink-0">
+                            <span
+                              className="w-5 h-5 inline-flex items-center justify-center shrink-0"
+                              style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+                            >
                               {item.icon}
                             </span>
                           )}
                           <div className="flex-1 min-w-0">
-                            <div className="text-text-light text-sm font-medium truncate">
+                            <div
+                              className="text-sm font-medium truncate"
+                              style={{ color: 'var(--theme-text-primary, #fafafa)' }}
+                            >
                               {item.label}
                             </div>
                             {item.description && (
-                              <div className="text-text-muted text-xs truncate">
+                              <div
+                                className="text-xs truncate"
+                                style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+                              >
                                 {item.description}
                               </div>
                             )}
@@ -269,7 +302,13 @@ export function CommandPalette({
             </div>
 
             {/* Footer hint row */}
-            <div className="flex items-center justify-between px-5 py-2.5 border-t border-white/10 text-xs text-text-muted">
+            <div
+              className="flex items-center justify-between px-5 py-2.5 border-t text-xs"
+              style={{
+                borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.1))',
+                color: 'var(--theme-text-muted, #a1a1aa)',
+              }}
+            >
               <span className="flex items-center gap-2">
                 <Keyboard size="sm">↑</Keyboard>
                 <Keyboard size="sm">↓</Keyboard>
@@ -285,4 +324,7 @@ export function CommandPalette({
       )}
     </AnimatePresence>
   );
+
+  if (typeof document === 'undefined') return tree;
+  return createPortal(tree, document.body);
 }

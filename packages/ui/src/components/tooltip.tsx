@@ -148,8 +148,13 @@ export function Tooltip({
               left: coords.left,
               zIndex: 60,
               pointerEvents: 'none',
+              backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.08))',
+              borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.15))',
+              color: 'var(--theme-text-primary, #fafafa)',
+              boxShadow:
+                'var(--theme-card-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 16px 48px rgba(0, 0, 0, 0.5))',
             }}
-            className="glass-strong text-text-light text-xs px-2 py-1 rounded-button whitespace-nowrap"
+            className="glass-strong text-xs px-2 py-1 rounded-button whitespace-nowrap"
           >
             {content}
           </motion.div>

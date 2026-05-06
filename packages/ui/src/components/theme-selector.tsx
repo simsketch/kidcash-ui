@@ -36,10 +36,20 @@ export function ThemeSelector({
       {(title || description) && (
         <div className="mb-4 space-y-1">
           {title && (
-            <h3 className="text-lg font-semibold text-text-light">{title}</h3>
+            <h3
+              className="text-lg font-semibold"
+              style={{ color: 'var(--theme-text-primary, #fafafa)' }}
+            >
+              {title}
+            </h3>
           )}
           {description && (
-            <p className="text-sm text-text-muted">{description}</p>
+            <p
+              className="text-sm"
+              style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+            >
+              {description}
+            </p>
           )}
         </div>
       )}
@@ -102,6 +112,11 @@ function ThemeCard({
           ? 'shadow-glow-primary ring-2 ring-primary-light/70'
           : 'ring-1 ring-white/10 hover:ring-white/20'
       }`}
+      style={{
+        backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.05))',
+        borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.1))',
+        color: 'var(--theme-text-primary, #fafafa)',
+      }}
     >
       <div className="flex items-center gap-2 mb-3" aria-hidden>
         {previewColors.map((color, i) => (
@@ -113,16 +128,25 @@ function ThemeCard({
         ))}
       </div>
       <div className="flex items-baseline justify-between gap-2 mb-1">
-        <span className="text-sm font-semibold text-text-light truncate">
+        <span
+          className="text-sm font-semibold truncate"
+          style={{ color: 'var(--theme-text-primary, #fafafa)' }}
+        >
           {label}
         </span>
         {selected && (
-          <span className="text-[10px] uppercase tracking-widest font-mono text-primary-light shrink-0">
+          <span
+            className="text-[10px] uppercase tracking-widest font-mono shrink-0"
+            style={{ color: 'var(--theme-accent-primary, #a78bfa)' }}
+          >
             Active
           </span>
         )}
       </div>
-      <p className="text-xs text-text-muted leading-snug line-clamp-2">
+      <p
+        className="text-xs leading-snug line-clamp-2"
+        style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+      >
         {description}
       </p>
     </motion.button>

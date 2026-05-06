@@ -228,7 +228,12 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     return (
       <div className="flex flex-col items-center">
         {inner}
-        <span className="text-sm mt-3 font-medium text-text-light">{name}</span>
+        <span
+          className="text-sm mt-3 font-medium"
+          style={{ color: 'var(--theme-text-primary, #fafafa)' }}
+        >
+          {name}
+        </span>
       </div>
     );
   },
@@ -265,8 +270,17 @@ export function AvatarStack({
       {overflow > 0 && (
         <div className="-ml-3" style={{ zIndex: 0 }}>
           <span
-            className="rounded-full bg-white/10 text-text-light font-semibold flex items-center justify-center border border-white/15 select-none"
-            style={{ width: px, height: px, fontSize }}
+            className="rounded-full font-semibold flex items-center justify-center select-none"
+            style={{
+              width: px,
+              height: px,
+              fontSize,
+              backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.1))',
+              borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.15))',
+              borderWidth: 1,
+              borderStyle: 'solid',
+              color: 'var(--theme-text-primary, #fafafa)',
+            }}
             aria-label={`+${overflow} more`}
           >
             +{overflow}

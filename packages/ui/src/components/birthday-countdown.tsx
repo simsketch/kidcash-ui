@@ -68,7 +68,12 @@ export function BirthdayCountdown({
           >
             {label} today!
           </GradientText>
-          <span className="text-sm text-text-muted">A very special day.</span>
+          <span
+            className="text-sm"
+            style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+          >
+            A very special day.
+          </span>
         </div>
       </GlassCard>
     );
@@ -85,8 +90,18 @@ export function BirthdayCountdown({
               {decorationEmoji}
             </div>
           )}
-          <span className="text-5xl font-bold text-text-muted tabular-nums">{ago}</span>
-          <span className="text-sm text-text-muted">days since {label}</span>
+          <span
+            className="text-5xl font-bold tabular-nums"
+            style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+          >
+            {ago}
+          </span>
+          <span
+            className="text-sm"
+            style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+          >
+            days since {label}
+          </span>
         </div>
       </GlassCard>
     );
@@ -112,10 +127,16 @@ export function BirthdayCountdown({
         >
           {days}
         </GradientText>
-        <span className="text-sm font-medium text-text-light mt-1">
+        <span
+          className="text-sm font-medium mt-1"
+          style={{ color: 'var(--theme-text-primary, #fafafa)' }}
+        >
           {days === 1 ? 'day' : 'days'} until
         </span>
-        <span className="text-xs uppercase tracking-widest text-text-muted font-mono">
+        <span
+          className="text-xs uppercase tracking-widest font-mono"
+          style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+        >
           {label}
         </span>
       </div>

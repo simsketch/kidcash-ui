@@ -27,6 +27,11 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
     { shape = 'rect', width, height, count = 1, className = '', style, ...rest },
     ref,
   ) => {
+    const themedSurfaceStyle: React.CSSProperties = {
+      backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.05))',
+      borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.1))',
+    };
+
     if (shape === 'text') {
       const bars = Math.max(1, count);
       return (
@@ -39,7 +44,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
                 key={i}
                 data-testid="skeleton-bar"
                 className="glass shimmer-overlay h-3 rounded-pill mb-2 last:mb-0"
-                style={{ width: w }}
+                style={{ width: w, ...themedSurfaceStyle }}
               />
             );
           })}
@@ -52,6 +57,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
     const computedStyle: React.CSSProperties = {
       width: toCssLength(width),
       height: toCssLength(height),
+      ...themedSurfaceStyle,
       ...style,
     };
 

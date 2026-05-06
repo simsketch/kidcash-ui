@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { spring } from '../tokens/motion';
 
@@ -179,7 +180,7 @@ export function EmojiPicker({
 
   const filtered = useMemo(() => emojis.filter((e) => matchesQuery(e, query)), [emojis, query]);
 
-  return (
+  const tree = (
     <AnimatePresence>
       {open && (
         <motion.div
@@ -193,9 +194,9 @@ export function EmojiPicker({
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-50 flex items-end justify-center"
           style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            backdropFilter: 'blur(24px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            backdropFilter: 'blur(40px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
           }}
         >
           <motion.div
@@ -204,14 +205,31 @@ export function EmojiPicker({
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={spring.gentle}
-            className="glass-strong rounded-t-card-lg w-full max-w-2xl p-6 max-h-[85vh] overflow-y-auto bg-bg-dark/85 border-white/15"
+            className="glass-strong rounded-t-card-lg w-full max-w-2xl p-6 max-h-[85vh] overflow-y-auto"
+            style={{
+              backgroundColor: 'var(--theme-card-bg, rgba(15, 11, 26, 0.97))',
+              borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.15))',
+              borderWidth: 1,
+              borderStyle: 'solid',
+              color: 'var(--theme-text-primary, #fafafa)',
+              boxShadow:
+                'var(--theme-card-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 24px 64px rgba(0, 0, 0, 0.6))',
+            }}
           >
             {/* Drag handle */}
             <div className="flex justify-center mb-4" aria-hidden>
-              <div className="w-12 h-1.5 rounded-pill bg-white/20" />
+              <div
+                className="w-12 h-1.5 rounded-pill"
+                style={{ backgroundColor: 'var(--theme-text-muted, rgba(255,255,255,0.2))' }}
+              />
             </div>
 
-            <h2 className="text-lg font-semibold mb-4 text-text-light">{title}</h2>
+            <h2
+              className="text-lg font-semibold mb-4"
+              style={{ color: 'var(--theme-text-primary, #fafafa)' }}
+            >
+              {title}
+            </h2>
 
             {showSearch && (
               <input
@@ -220,13 +238,21 @@ export function EmojiPicker({
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search emojis…"
                 aria-label="Search emojis"
-                className="w-full mb-4 px-4 py-2 rounded-button glass text-text-light placeholder:text-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full mb-4 px-4 py-2 rounded-button glass text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                style={{
+                  backgroundColor: 'var(--theme-card-bg, rgba(255,255,255,0.05))',
+                  color: 'var(--theme-text-primary, #fafafa)',
+                  borderColor: 'var(--theme-card-border, rgba(255,255,255,0.1))',
+                }}
               />
             )}
 
             {recents && recents.length > 0 && (
               <div className="mb-4">
-                <div className="text-xs uppercase tracking-widest text-text-muted font-mono mb-2">
+                <div
+                  className="text-xs uppercase tracking-widest font-mono mb-2"
+                  style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+                >
                   Recent
                 </div>
                 <div className="grid grid-cols-8 md:grid-cols-12 gap-1">
@@ -237,7 +263,7 @@ export function EmojiPicker({
                       whileHover={{ scale: 1.2 }}
                       whileTap={{ scale: 0.9 }}
                       transition={spring.bounce}
-                      className="text-2xl p-2 rounded-button hover:bg-white/10"
+                      className="text-2xl p-2 rounded-button hover:bg-[var(--theme-card-hover-bg,rgba(255,255,255,0.1))]"
                       aria-label={e}
                     >
                       {e}
@@ -249,7 +275,10 @@ export function EmojiPicker({
 
             <div className="grid grid-cols-8 md:grid-cols-12 gap-1">
               {filtered.length === 0 ? (
-                <div className="col-span-full text-center py-8 text-text-muted text-sm">
+                <div
+                  className="col-span-full text-center py-8 text-sm"
+                  style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+                >
                   No emojis match {`"${query}"`}.
                 </div>
               ) : (
@@ -260,7 +289,7 @@ export function EmojiPicker({
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.9 }}
                     transition={spring.bounce}
-                    className="text-2xl p-2 rounded-button hover:bg-white/10"
+                    className="text-2xl p-2 rounded-button hover:bg-[var(--theme-card-hover-bg,rgba(255,255,255,0.1))]"
                     aria-label={e}
                   >
                     {e}
@@ -273,4 +302,7 @@ export function EmojiPicker({
       )}
     </AnimatePresence>
   );
+
+  if (typeof document === 'undefined') return tree;
+  return createPortal(tree, document.body);
 }

@@ -1,5 +1,6 @@
 'use client';
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { spring } from '../tokens/motion';
 
@@ -109,7 +110,7 @@ export function Sheet({
 
   const styles = getStyles(position, size);
 
-  return (
+  const tree = (
     <AnimatePresence>
       {open && (
         <motion.div
@@ -123,9 +124,9 @@ export function Sheet({
           transition={{ duration: 0.2 }}
           className={`fixed inset-0 z-50 flex ${styles.container}`}
           style={{
-            backgroundColor: 'rgba(10, 6, 18, 0.6)',
-            backdropFilter: 'blur(20px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            backdropFilter: 'blur(40px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
           }}
         >
           <motion.div
@@ -135,6 +136,15 @@ export function Sheet({
             exit={styles.exit}
             transition={spring.gentle}
             className={`glass-strong ${styles.rounded} p-6 ${styles.panel} overflow-y-auto`}
+            style={{
+              backgroundColor: 'var(--theme-card-bg, rgba(15, 11, 26, 0.97))',
+              borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.15))',
+              borderWidth: 1,
+              borderStyle: 'solid',
+              color: 'var(--theme-text-primary, #fafafa)',
+              boxShadow:
+                'var(--theme-card-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 24px 64px rgba(0, 0, 0, 0.6))',
+            }}
           >
             {showHandle && position === 'bottom' && (
               <div className="flex justify-center mb-4" aria-hidden>
@@ -152,7 +162,12 @@ export function Sheet({
               />
             )}
             {title && (
-              <h2 className="text-xl font-semibold mb-4 text-text-light">{title}</h2>
+              <h2
+                className="text-xl font-semibold mb-4"
+                style={{ color: 'var(--theme-text-primary, #fafafa)' }}
+              >
+                {title}
+              </h2>
             )}
             {children}
           </motion.div>
@@ -160,4 +175,7 @@ export function Sheet({
       )}
     </AnimatePresence>
   );
+
+  if (typeof document === 'undefined') return tree;
+  return createPortal(tree, document.body);
 }

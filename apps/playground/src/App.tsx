@@ -64,7 +64,7 @@ function SectionHeader({
       <GradientText as="h2" variant={variant} className="text-3xl font-semibold tracking-tight">
         {title}
       </GradientText>
-      <p className="text-text-muted">{subtitle}</p>
+      <p style={{ color: 'var(--theme-text-muted)' }}>{subtitle}</p>
     </div>
   );
 }
@@ -103,8 +103,8 @@ function ToastDemo() {
   );
 }
 
-// ----- Pass 3 driver (needs toast hook for command palette feedback) -----
-function Pass3Sections() {
+// ----- Phenomenal section driver (needs toast hook for command palette feedback) -----
+function PhenomenalSections() {
   const { toast } = useToast();
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -216,7 +216,7 @@ function Pass3Sections() {
           >
             Open Command Palette
           </Button>
-          <span className="text-sm text-text-muted flex items-center gap-2">
+          <span className="text-sm text-[var(--theme-text-muted)] flex items-center gap-2">
             or press <Keyboard>⌘</Keyboard> <Keyboard>K</Keyboard>
           </span>
         </div>
@@ -246,7 +246,7 @@ function Pass3Sections() {
           description="This is the generic Modal primitive — escape, click outside, or hit close to dismiss."
           size="md"
         >
-          <div className="space-y-4 text-text-muted text-sm leading-relaxed">
+          <div className="space-y-4 text-[var(--theme-text-muted)] text-sm leading-relaxed">
             <p>
               Use it for confirmation dialogs, settings panels, sign-up forms — anywhere
               you'd reach for a centered overlay. Spring physics on the entrance and a
@@ -273,14 +273,14 @@ function Pass3Sections() {
         />
         <div className="space-y-4">
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="text-text-muted">Open command palette:</span>
+            <span className="text-[var(--theme-text-muted)]">Open command palette:</span>
             <span className="inline-flex gap-1">
               <Keyboard>⌘</Keyboard>
               <Keyboard>K</Keyboard>
             </span>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="text-text-muted">Quick switcher:</span>
+            <span className="text-[var(--theme-text-muted)]">Quick switcher:</span>
             <span className="inline-flex gap-1">
               <Keyboard>⌘</Keyboard>
               <Keyboard>⇧</Keyboard>
@@ -288,15 +288,15 @@ function Pass3Sections() {
             </span>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="text-text-muted">Cancel / dismiss:</span>
+            <span className="text-[var(--theme-text-muted)]">Cancel / dismiss:</span>
             <Keyboard>Esc</Keyboard>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="text-text-muted">Confirm:</span>
+            <span className="text-[var(--theme-text-muted)]">Confirm:</span>
             <Keyboard>↩</Keyboard>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="text-text-muted">Sizes:</span>
+            <span className="text-[var(--theme-text-muted)]">Sizes:</span>
             <Keyboard size="sm">sm</Keyboard>
             <Keyboard size="md">md</Keyboard>
           </div>
@@ -355,7 +355,7 @@ function Pass3Sections() {
           className="rounded-card-lg"
         >
           <div className="glass-strong rounded-card-lg p-12 text-center space-y-3">
-            <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+            <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
               Hover anywhere on this card
             </p>
             <GradientText
@@ -365,7 +365,7 @@ function Pass3Sections() {
             >
               The cursor lights it up.
             </GradientText>
-            <p className="text-text-muted max-w-md mx-auto">
+            <p className="text-[var(--theme-text-muted)] max-w-md mx-auto">
               Use Spotlight on hero sections, pricing cards, or anywhere you want
               a little extra polish. It works great over glass surfaces.
             </p>
@@ -377,7 +377,6 @@ function Pass3Sections() {
 }
 
 function PlaygroundInner() {
-  // ---- Pass 1 state ----
   const [value, setValue] = useState(1234.56);
   const [plainValue, setPlainValue] = useState(42);
   const [loading, setLoading] = useState(false);
@@ -395,7 +394,6 @@ function PlaygroundInner() {
 
   const [celebrationOpen, setCelebrationOpen] = useState(false);
 
-  // ---- Pass 2B state ----
   const [pillTags, setPillTags] = useState<string[]>(['allowance', 'savings', 'chores']);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [slider1, setSlider1] = useState(50);
@@ -460,10 +458,10 @@ function PlaygroundInner() {
             >
               KidCash UI
             </GradientText>
-            <p className="text-xl md:text-2xl text-text-muted max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-[var(--theme-text-secondary)] max-w-2xl mx-auto leading-relaxed">
               Liquid glass. Spring physics. Apple-grade craft. Free and open source.
             </p>
-            <p className="text-sm text-text-muted flex items-center justify-center gap-2">
+            <p className="text-sm text-[var(--theme-text-muted)] flex items-center justify-center gap-2">
               Press <Keyboard>⌘</Keyboard> <Keyboard>K</Keyboard> to open the command palette
             </p>
             <div className="flex items-center justify-center gap-3 pt-4">
@@ -487,10 +485,6 @@ function PlaygroundInner() {
           <ThemeSelector />
         </GlassCard>
 
-        {/* =============================== */}
-        {/* PASS 1 — FOUNDATION PRIMITIVES  */}
-        {/* =============================== */}
-
         {/* ----- Buttons ----- */}
         <GlassCard variant="default" className="!p-10 space-y-8 mb-12">
           <SectionHeader
@@ -502,7 +496,7 @@ function PlaygroundInner() {
           <div className="space-y-6">
             {variants.map((variant) => (
               <div key={variant} className="space-y-3">
-                <p className="text-sm uppercase tracking-widest text-text-muted font-mono">
+                <p className="text-sm uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
                   {variant}
                 </p>
                 <div className="flex flex-wrap items-end gap-3">
@@ -547,31 +541,31 @@ function PlaygroundInner() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <GlassCard variant="default">
-              <p className="text-xs uppercase tracking-widest text-text-muted font-mono mb-3">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
                 default
               </p>
               <h3 className="text-xl font-semibold mb-2">Subtle surface</h3>
-              <p className="text-text-muted text-sm leading-relaxed">
+              <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed">
                 40px blur, 5% white tint, inset highlight. Sits quietly on top of the aurora.
               </p>
             </GlassCard>
 
             <GlassCard variant="strong" hover>
-              <p className="text-xs uppercase tracking-widest text-text-muted font-mono mb-3">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
                 strong + hover
               </p>
               <h3 className="text-xl font-semibold mb-2">Lift on hover</h3>
-              <p className="text-text-muted text-sm leading-relaxed">
+              <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed">
                 60px blur and a 200% saturation boost. Springs up 4px when the cursor lands.
               </p>
             </GlassCard>
 
             <GlassCard variant="strong" hover glow="primary">
-              <p className="text-xs uppercase tracking-widest text-text-muted font-mono mb-3">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
                 glow primary
               </p>
               <h3 className="text-xl font-semibold mb-2">Halo of light</h3>
-              <p className="text-text-muted text-sm leading-relaxed">
+              <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed">
                 Two-layer glow ring (40px + 80px). Use sparingly — it draws the eye.
               </p>
             </GlassCard>
@@ -589,7 +583,7 @@ function PlaygroundInner() {
           <div className="space-y-3">
             {gradientVariants.map((variant) => (
               <div key={variant} className="flex items-baseline gap-6 flex-wrap">
-                <span className="text-xs uppercase tracking-widest text-text-muted font-mono w-24">
+                <span className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono w-24">
                   {variant}
                 </span>
                 <GradientText
@@ -614,7 +608,7 @@ function PlaygroundInner() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-6">
             <div className="text-center space-y-3">
-              <p className="text-sm uppercase tracking-widest text-text-muted font-mono">
+              <p className="text-sm uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
                 Currency
               </p>
               <GradientText
@@ -638,7 +632,7 @@ function PlaygroundInner() {
             </div>
 
             <div className="text-center space-y-3">
-              <p className="text-sm uppercase tracking-widest text-text-muted font-mono">
+              <p className="text-sm uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
                 Plain number
               </p>
               <GradientText
@@ -662,23 +656,6 @@ function PlaygroundInner() {
             </div>
           </div>
         </GlassCard>
-
-        {/* =============================== */}
-        {/* PASS 2A — REBUILT COMPONENTS    */}
-        {/* =============================== */}
-
-        <div className="text-center pt-8 pb-2">
-          <GradientText
-            variant="flame"
-            as="h2"
-            className="text-5xl font-bold tracking-tight"
-          >
-            Pass 2A · Component kit
-          </GradientText>
-          <p className="text-text-muted mt-2">
-            Rebuilt components on the liquid-glass foundation.
-          </p>
-        </div>
 
         {/* ----- Confetti ----- */}
         <GlassCard variant="default" className="!p-10 space-y-6 mb-12">
@@ -726,7 +703,7 @@ function PlaygroundInner() {
             >
               🚀 Rise
             </Button>
-            <span className="text-sm text-text-muted ml-2">
+            <span className="text-sm text-[var(--theme-text-muted)] ml-2">
               {coinsVariant ? `Showing ${coinsVariant}` : 'Click to toggle'}
             </span>
           </div>
@@ -784,7 +761,7 @@ function PlaygroundInner() {
             <Button variant="secondary" onClick={() => setPickerOpen(true)}>
               <span className="text-2xl mr-1">{pickedEmoji}</span> Click to change
             </Button>
-            <span className="text-sm text-text-muted">Selected: {pickedEmoji}</span>
+            <span className="text-sm text-[var(--theme-text-muted)]">Selected: {pickedEmoji}</span>
           </div>
           <EmojiPicker
             open={pickerOpen}
@@ -804,7 +781,7 @@ function PlaygroundInner() {
             variant="flame"
             subtitle="Scroll up after a long page — appears in the bottom-right corner."
           />
-          <p className="text-text-muted">
+          <p className="text-[var(--theme-text-muted)]">
             Scroll the page; once you cross 400px the up-arrow button springs in.
           </p>
           <BackToTop showAfter={400} />
@@ -833,7 +810,7 @@ function PlaygroundInner() {
             >
               Unlock one
             </Button>
-            <span className="text-sm text-text-muted">{unlockedCount} / 8 unlocked</span>
+            <span className="text-sm text-[var(--theme-text-muted)]">{unlockedCount} / 8 unlocked</span>
           </div>
         </GlassCard>
 
@@ -883,23 +860,6 @@ function PlaygroundInner() {
           />
         </GlassCard>
 
-        {/* =============================== */}
-        {/* PASS 2B — GENERIC PRIMITIVES    */}
-        {/* =============================== */}
-
-        <div className="text-center pt-8 pb-2">
-          <GradientText
-            variant="aurora"
-            as="h2"
-            className="text-5xl font-bold tracking-tight"
-          >
-            Pass 2B · Generic primitives
-          </GradientText>
-          <p className="text-text-muted mt-2">
-            Small workhorse components. Tags, tooltips, loaders, sheets, sliders, avatars.
-          </p>
-        </div>
-
         {/* ----- Pill ----- */}
         <GlassCard variant="default" className="!p-10 space-y-6 mb-12">
           <SectionHeader
@@ -909,7 +869,7 @@ function PlaygroundInner() {
           />
           <div className="space-y-4">
             <div className="space-y-2">
-              <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
                 Variants × sizes
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -931,7 +891,7 @@ function PlaygroundInner() {
               </div>
             </div>
             <div className="space-y-2">
-              <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
                 With leading icon
               </p>
               <div className="flex flex-wrap gap-2">
@@ -947,7 +907,7 @@ function PlaygroundInner() {
               </div>
             </div>
             <div className="space-y-2">
-              <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
                 Removable
               </p>
               <div className="flex flex-wrap gap-2">
@@ -1007,19 +967,19 @@ function PlaygroundInner() {
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-3">
-              <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
                 rect
               </p>
               <Skeleton width="100%" height={120} />
             </div>
             <div className="space-y-3">
-              <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
                 circle
               </p>
               <Skeleton shape="circle" width={80} height={80} />
             </div>
             <div className="space-y-3">
-              <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
                 text · 3 lines
               </p>
               <Skeleton shape="text" count={3} />
@@ -1040,14 +1000,14 @@ function PlaygroundInner() {
             </Button>
           </div>
           <Sheet open={sheetOpen} onClose={() => setSheetOpen(false)} title="About this sheet">
-            <div className="space-y-4 text-text-muted text-sm leading-relaxed">
+            <div className="space-y-4 text-[var(--theme-text-muted)] text-sm leading-relaxed">
               <p>
-                This is the generic <code className="text-text-light font-mono">Sheet</code>{' '}
+                This is the generic <code className="text-[var(--theme-text-primary)] font-mono">Sheet</code>{' '}
                 primitive — the same pattern the EmojiPicker uses internally, exposed for any
                 modal/drawer use case.
               </p>
               <p>
-                It takes a <code className="text-text-light font-mono">position</code> (top /
+                It takes a <code className="text-[var(--theme-text-primary)] font-mono">position</code> (top /
                 bottom / left / right), an optional title, an optional drag handle, and standard
                 open / onClose props. Click outside or press Escape to dismiss.
               </p>
@@ -1105,7 +1065,7 @@ function PlaygroundInner() {
           />
           <div className="space-y-8">
             <div className="space-y-3">
-              <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
                 Sizes & statuses (initials)
               </p>
               <div className="flex flex-wrap gap-6 items-end">
@@ -1118,7 +1078,7 @@ function PlaygroundInner() {
             </div>
 
             <div className="space-y-3">
-              <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
                 Emoji avatars · ring · vibrant
               </p>
               <div className="flex flex-wrap gap-10 items-end">
@@ -1131,7 +1091,7 @@ function PlaygroundInner() {
             </div>
 
             <div className="space-y-3">
-              <p className="text-xs uppercase tracking-widest text-text-muted font-mono">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
                 Stack of 6 (max=4)
               </p>
               <AvatarStack
@@ -1150,27 +1110,10 @@ function PlaygroundInner() {
           </div>
         </GlassCard>
 
-        {/* =============================== */}
-        {/* PASS 3 — PHENOMENAL              */}
-        {/* =============================== */}
-
-        <div className="text-center pt-8 pb-2">
-          <GradientText
-            variant="animated"
-            as="h2"
-            className="text-5xl font-bold tracking-tight"
-          >
-            Pass 3 · Phenomenal
-          </GradientText>
-          <p className="text-text-muted mt-2">
-            The marquee components. Cmd+K palette, modal, keyboard chips, marquee, spotlight.
-          </p>
-        </div>
-
-        <Pass3Sections />
+        <PhenomenalSections />
 
         {/* ----- Footer ----- */}
-        <footer className="pt-8 pb-4 text-center text-sm text-text-muted">
+        <footer className="pt-8 pb-4 text-center text-sm text-[var(--theme-text-muted)]">
           <span className="font-mono">@kidcash/ui</span>
         </footer>
       </div>

@@ -22,12 +22,24 @@ export interface PillProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantClass: Record<PillVariant, string> = {
-  default: 'glass text-text-light',
+  default: 'glass',
   primary: 'bg-primary/15 text-primary-light',
   success: 'bg-success/15 text-success',
   warning: 'bg-warning/15 text-warning',
   danger: 'bg-danger/15 text-danger',
   gradient: 'bg-gradient-aurora text-white',
+};
+
+const variantStyle: Record<PillVariant, React.CSSProperties> = {
+  default: {
+    backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.05))',
+    color: 'var(--theme-text-primary, #fafafa)',
+  },
+  primary: {},
+  success: {},
+  warning: {},
+  danger: {},
+  gradient: {},
 };
 
 const sizeClass: Record<PillSize, string> = {
@@ -73,6 +85,7 @@ export const Pill = forwardRef<HTMLSpanElement, PillProps>(
       removable = false,
       onRemove,
       className = '',
+      style,
       children,
       ...rest
     },
@@ -82,6 +95,7 @@ export const Pill = forwardRef<HTMLSpanElement, PillProps>(
       <span
         ref={ref}
         className={`inline-flex items-center justify-center rounded-pill font-medium ${sizeClass[size]} ${variantClass[variant]} ${className}`}
+        style={{ ...variantStyle[variant], ...style }}
         {...rest}
       >
         {iconLeft && <span className="inline-flex items-center">{iconLeft}</span>}

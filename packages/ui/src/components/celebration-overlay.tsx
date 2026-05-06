@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { spring } from '../tokens/motion';
 import { Confetti, type ConfettiIntensity } from './confetti';
@@ -52,7 +53,7 @@ export function CelebrationOverlay({
     }
   }, [open, duration, onClose, playSound]);
 
-  return (
+  const tree = (
     <AnimatePresence>
       {open && (
         <motion.div
@@ -62,7 +63,7 @@ export function CelebrationOverlay({
           transition={{ duration: 0.25 }}
           className={`fixed inset-0 z-50 flex items-center justify-center ${className ?? ''}`}
           style={{
-            backgroundColor: 'rgba(10, 6, 18, 0.55)',
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
             backdropFilter: 'blur(60px) saturate(200%)',
             WebkitBackdropFilter: 'blur(60px) saturate(200%)',
           }}
@@ -99,7 +100,12 @@ export function CelebrationOverlay({
                 </GradientText>
               )}
               {subtitle && (
-                <p className="text-text-muted text-lg leading-relaxed">{subtitle}</p>
+                <p
+                  className="text-lg leading-relaxed"
+                  style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+                >
+                  {subtitle}
+                </p>
               )}
             </GlassCard>
           </motion.div>
@@ -107,4 +113,7 @@ export function CelebrationOverlay({
       )}
     </AnimatePresence>
   );
+
+  if (typeof document === 'undefined') return tree;
+  return createPortal(tree, document.body);
 }

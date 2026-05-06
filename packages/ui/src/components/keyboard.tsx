@@ -21,8 +21,13 @@ export const Keyboard = forwardRef<HTMLElement, KeyboardProps>(
     return (
       <kbd
         ref={ref}
-        className={`glass inline-flex items-center justify-center rounded border border-white/15 font-mono leading-none text-text-light ${sizeClass[size]} ${className}`}
+        className={`glass inline-flex items-center justify-center rounded font-mono leading-none ${sizeClass[size]} ${className}`}
         style={{
+          backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.05))',
+          borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.15))',
+          borderWidth: 1,
+          borderStyle: 'solid',
+          color: 'var(--theme-text-primary, #fafafa)',
           boxShadow:
             'inset 0 -1px 0 rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
           ...style,

@@ -96,7 +96,8 @@ export function AchievementBadge({
           <span
             data-testid="badge-lock"
             aria-hidden
-            className="absolute top-2 right-2 text-text-muted"
+            className="absolute top-2 right-2"
+            style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
           >
             <LockIcon />
           </span>
@@ -111,9 +112,19 @@ export function AchievementBadge({
         >
           {emoji}
         </motion.span>
-        <span className="font-bold text-sm text-text-light leading-tight">{label}</span>
+        <span
+          className="font-bold text-sm leading-tight"
+          style={{ color: 'var(--theme-text-primary, #fafafa)' }}
+        >
+          {label}
+        </span>
         {description && (
-          <span className="text-xs text-text-muted mt-1 leading-snug">{description}</span>
+          <span
+            className="text-xs mt-1 leading-snug"
+            style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+          >
+            {description}
+          </span>
         )}
         {tier && <TierDots tier={tier} />}
       </GlassCard>

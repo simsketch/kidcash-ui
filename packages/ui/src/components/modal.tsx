@@ -1,5 +1,6 @@
 'use client';
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { spring } from '../tokens/motion';
 
@@ -66,7 +67,7 @@ export function Modal({
     return () => window.removeEventListener('keydown', onKey);
   }, [open, onClose]);
 
-  return (
+  const tree = (
     <AnimatePresence>
       {open && (
         <motion.div
@@ -82,9 +83,9 @@ export function Modal({
           transition={{ duration: 0.18 }}
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            backdropFilter: 'blur(24px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            backdropFilter: 'blur(40px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
           }}
         >
           <motion.div
@@ -94,7 +95,16 @@ export function Modal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -10 }}
             transition={spring.gentle}
-            className={`glass-strong rounded-card-lg p-8 w-full ${sizeClass[size]} relative bg-bg-dark/85 border-white/15`}
+            className={`glass-strong rounded-card-lg p-8 w-full ${sizeClass[size]} relative`}
+            style={{
+              backgroundColor: 'var(--theme-card-bg, rgba(15, 11, 26, 0.97))',
+              borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.15))',
+              borderWidth: 1,
+              borderStyle: 'solid',
+              color: 'var(--theme-text-primary, #fafafa)',
+              boxShadow:
+                'var(--theme-card-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 24px 64px rgba(0, 0, 0, 0.6))',
+            }}
           >
             {showClose && (
               <button
@@ -102,18 +112,27 @@ export function Modal({
                 onClick={onClose}
                 aria-label="Close"
                 data-testid="modal-close"
-                className="absolute top-4 right-4 w-8 h-8 rounded-full inline-flex items-center justify-center text-text-muted hover:text-text-light hover:bg-white/10 transition-colors cursor-pointer"
+                className="absolute top-4 right-4 w-8 h-8 rounded-full inline-flex items-center justify-center transition-colors cursor-pointer hover:bg-[var(--theme-card-hover-bg,rgba(255,255,255,0.1))]"
+                style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
               >
                 <CloseIcon />
               </button>
             )}
             {title && (
-              <h2 className="text-xl font-semibold text-text-light mb-1 pr-8">
+              <h2
+                className="text-xl font-semibold mb-1 pr-8"
+                style={{ color: 'var(--theme-text-primary, #fafafa)' }}
+              >
                 {title}
               </h2>
             )}
             {description && (
-              <p className="text-sm text-text-muted mb-4 pr-8">{description}</p>
+              <p
+                className="text-sm mb-4 pr-8"
+                style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+              >
+                {description}
+              </p>
             )}
             <div className={title || description ? 'mt-2' : ''}>{children}</div>
           </motion.div>
@@ -121,4 +140,10 @@ export function Modal({
       )}
     </AnimatePresence>
   );
+
+  // Render via a portal to <body> so backdrop-filter ancestors (e.g. the
+  // surrounding GlassCard) don't form a containing block that constrains the
+  // fixed-positioned overlay.
+  if (typeof document === 'undefined') return tree;
+  return createPortal(tree, document.body);
 }

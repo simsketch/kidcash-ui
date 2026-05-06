@@ -51,15 +51,33 @@ export function Slider({
     <div className={`w-full ${className}`}>
       {(label || showValue) && (
         <div className="flex items-baseline justify-between mb-2">
-          {label && <div className="text-sm font-medium text-text-light">{label}</div>}
+          {label && (
+            <div
+              className="text-sm font-medium"
+              style={{ color: 'var(--theme-text-primary, #fafafa)' }}
+            >
+              {label}
+            </div>
+          )}
           {showValue && (
-            <div className="text-sm tabular-nums text-text-muted font-mono">{value}</div>
+            <div
+              className="text-sm tabular-nums font-mono"
+              style={{ color: 'var(--theme-text-muted, #a1a1aa)' }}
+            >
+              {value}
+            </div>
           )}
         </div>
       )}
       <div className="relative h-5 flex items-center select-none">
         {/* Track */}
-        <div className="glass h-2 w-full rounded-pill overflow-hidden relative">
+        <div
+          className="glass h-2 w-full rounded-pill overflow-hidden relative"
+          style={{
+            backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.05))',
+            borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.1))',
+          }}
+        >
           <div
             className={`h-full rounded-pill ${fillClass[variant]}`}
             style={{ width: `${clampedPct}%` }}
@@ -73,6 +91,9 @@ export function Slider({
           }`}
           style={{
             left: `calc(${clampedPct}% - 10px)`,
+            borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.15))',
+            borderWidth: 1,
+            borderStyle: 'solid',
           }}
         />
         {/* Native input — invisible overlay for interaction + a11y */}
