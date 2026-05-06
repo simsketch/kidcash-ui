@@ -15,14 +15,48 @@ describe('<Avatar>', () => {
     expect(screen.getByText('EZ')).toBeInTheDocument();
   });
 
+  it('renders an emoji when emoji prop is provided', () => {
+    render(<Avatar emoji="🦄" />);
+    expect(screen.getByText('🦄')).toBeInTheDocument();
+  });
+
+  it('renders a name caption below the avatar when name is provided', () => {
+    render(<Avatar emoji="🐱" name="Mimi" />);
+    expect(screen.getByText('Mimi')).toBeInTheDocument();
+  });
+
+  it('renders a halo for emoji avatars', () => {
+    render(<Avatar emoji="🦄" />);
+    expect(screen.getByTestId('avatar-halo')).toBeInTheDocument();
+  });
+
+  it('does not render a halo for image / fallback avatars', () => {
+    const { rerender } = render(<Avatar fallback="EZ" />);
+    expect(screen.queryByTestId('avatar-halo')).toBeNull();
+    rerender(<Avatar src="/x.png" alt="X" />);
+    expect(screen.queryByTestId('avatar-halo')).toBeNull();
+  });
+
+  it('uses the aurora-gradient surface when vibrant is true', () => {
+    const { container } = render(<Avatar emoji="🚀" vibrant />);
+    expect(container.querySelector('.bg-gradient-aurora')).toBeTruthy();
+  });
+
+  it('renders a progress ring only when both ring and ringMax are provided', () => {
+    const { rerender } = render(<Avatar emoji="⭐" />);
+    expect(screen.queryByTestId('avatar-ring')).toBeNull();
+    rerender(<Avatar emoji="⭐" ring={5} ringMax={10} />);
+    expect(screen.getByTestId('avatar-ring')).toBeInTheDocument();
+  });
+
   it('renders a status dot when status is set', () => {
     render(<Avatar fallback="EZ" status="online" />);
     expect(screen.getByTestId('avatar-status')).toHaveAttribute('data-status', 'online');
   });
 
   it('applies a size-specific style for the lg size', () => {
-    const { container } = render(<Avatar fallback="EZ" size="lg" />);
-    const root = container.firstChild as HTMLElement;
+    render(<Avatar fallback="EZ" size="lg" />);
+    const root = screen.getByTestId('avatar-root') as HTMLElement;
     expect(root.style.width).toBe('56px');
     expect(root.style.height).toBe('56px');
   });

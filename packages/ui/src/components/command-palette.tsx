@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { spring } from '../tokens/motion';
-import { Kbd } from './kbd';
+import { Keyboard } from './keyboard';
 
 export interface CommandItem {
   id: string;
@@ -160,9 +160,9 @@ export function CommandPalette({
           transition={{ duration: 0.18 }}
           className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] px-4"
           style={{
-            backgroundColor: 'rgba(10, 6, 18, 0.6)',
-            backdropFilter: 'blur(20px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            backdropFilter: 'blur(24px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(180%)',
           }}
         >
           <motion.div
@@ -173,7 +173,7 @@ export function CommandPalette({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={spring.gentle}
-            className="glass-strong rounded-card-lg w-full max-w-xl overflow-hidden shadow-glow-primary"
+            className="glass-strong rounded-card-lg w-full max-w-xl overflow-hidden shadow-glow-primary bg-bg-dark/85 border-white/15"
           >
             {/* Search row */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10">
@@ -192,7 +192,7 @@ export function CommandPalette({
                 spellCheck={false}
               />
               <span className="hidden sm:inline-flex items-center gap-1 text-text-muted">
-                <Kbd size="sm">esc</Kbd>
+                <Keyboard size="sm">esc</Keyboard>
               </span>
             </div>
 
@@ -254,9 +254,9 @@ export function CommandPalette({
                           {item.shortcut && item.shortcut.length > 0 && (
                             <div className="hidden sm:flex items-center gap-1 shrink-0">
                               {item.shortcut.map((key, i) => (
-                                <Kbd key={`${item.id}-${i}`} size="sm">
+                                <Keyboard key={`${item.id}-${i}`} size="sm">
                                   {key}
-                                </Kbd>
+                                </Keyboard>
                               ))}
                             </div>
                           )}
@@ -271,12 +271,12 @@ export function CommandPalette({
             {/* Footer hint row */}
             <div className="flex items-center justify-between px-5 py-2.5 border-t border-white/10 text-xs text-text-muted">
               <span className="flex items-center gap-2">
-                <Kbd size="sm">↑</Kbd>
-                <Kbd size="sm">↓</Kbd>
+                <Keyboard size="sm">↑</Keyboard>
+                <Keyboard size="sm">↓</Keyboard>
                 <span>navigate</span>
               </span>
               <span className="flex items-center gap-2">
-                <Kbd size="sm">↩</Kbd>
+                <Keyboard size="sm">↩</Keyboard>
                 <span>select</span>
               </span>
             </div>

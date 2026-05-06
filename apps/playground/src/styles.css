@@ -7,12 +7,15 @@
 @source "../../../packages/ui/dist/**/*.js";
 
 body {
-  background: var(--color-bg-dark);
-  color: var(--color-text-light);
+  /* The ThemeProvider sets `--theme-background` on `<html>`. Fall back to
+     the legacy bg-dark token while the kit hydrates so we never flash white. */
+  background: var(--theme-background, var(--color-bg-dark));
+  color: var(--theme-text-primary, var(--color-text-light));
   font-family: var(--font-sans);
   margin: 0;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: 'cv11', 'ss01';
+  transition: background 400ms ease, color 400ms ease;
 }
 
 * {

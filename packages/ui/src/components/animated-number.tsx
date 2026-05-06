@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 
 export interface AnimatedNumberProps {
   value: number;
@@ -9,18 +8,22 @@ export interface AnimatedNumberProps {
   /** Custom value formatter (e.g. currency). Receives the rounded display value. */
   format?: (n: number) => string;
   className?: string;
-  /** Wrap each value change in a tiny spring scale-up bump. */
-  springScale?: boolean;
 }
 
 const defaultFormat = (n: number) => n.toLocaleString();
 
+/**
+ * `AnimatedNumber` — tweens between numeric values on an easeOutExpo curve
+ * driven by `requestAnimationFrame`. The visible animation comes entirely
+ * from the running display value; we deliberately render a plain `<span>`
+ * (no `motion.span`, no `key={value}`) to avoid remounting / scale-pulses
+ * that flashed on every change.
+ */
 export function AnimatedNumber({
   value,
   duration = 1200,
   format = defaultFormat,
   className,
-  springScale = true,
 }: AnimatedNumberProps) {
   const [display, setDisplay] = useState(value);
   const fromRef = useRef(value);
@@ -56,15 +59,5 @@ export function AnimatedNumber({
   // Round to 2 decimals so currency formatters get clean inputs.
   const formatted = format(Math.round(display * 100) / 100);
 
-  return (
-    <motion.span
-      key={value}
-      className={`tabular-nums ${className ?? ''}`}
-      initial={springScale ? { scale: 0.95 } : undefined}
-      animate={springScale ? { scale: 1 } : undefined}
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-    >
-      {formatted}
-    </motion.span>
-  );
+  return <span className={`tabular-nums ${className ?? ''}`}>{formatted}</span>;
 }

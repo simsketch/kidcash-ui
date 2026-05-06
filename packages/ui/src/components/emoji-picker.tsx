@@ -193,9 +193,9 @@ export function EmojiPicker({
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-50 flex items-end justify-center"
           style={{
-            backgroundColor: 'rgba(10, 6, 18, 0.6)',
-            backdropFilter: 'blur(20px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            backdropFilter: 'blur(24px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(180%)',
           }}
         >
           <motion.div
@@ -204,7 +204,7 @@ export function EmojiPicker({
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={spring.gentle}
-            className="glass-strong rounded-t-card-lg w-full max-w-2xl p-6 max-h-[85vh] overflow-y-auto"
+            className="glass-strong rounded-t-card-lg w-full max-w-2xl p-6 max-h-[85vh] overflow-y-auto bg-bg-dark/85 border-white/15"
           >
             {/* Drag handle */}
             <div className="flex justify-center mb-4" aria-hidden>

@@ -24,6 +24,11 @@ const variantClass: Record<ProgressBarVariant, string> = {
   danger: 'bg-gradient-flame',
 };
 
+/** When `animate=true` and the variant has an animated counterpart, use it. */
+const animatedVariantClass: Partial<Record<ProgressBarVariant, string>> = {
+  primary: 'bg-gradient-aurora-animated',
+};
+
 const heightClass: Record<ProgressBarSize, string> = {
   sm: 'h-1',
   md: 'h-2',
@@ -49,6 +54,10 @@ export function ProgressBar({
 }: ProgressBarProps) {
   const clamped = Math.max(0, Math.min(max, value));
   const pct = (clamped / max) * 100;
+  const fillClass =
+    animate && animatedVariantClass[variant]
+      ? animatedVariantClass[variant]!
+      : variantClass[variant];
 
   return (
     <div
@@ -70,7 +79,7 @@ export function ProgressBar({
       )}
       <div className={`glass ${heightClass[size]} rounded-pill overflow-hidden relative`}>
         <motion.div
-          className={`h-full rounded-pill ${variantClass[variant]} ${
+          className={`h-full rounded-pill ${fillClass} ${
             animate ? 'shimmer-overlay' : ''
           }`}
           initial={false}

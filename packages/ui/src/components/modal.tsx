@@ -82,9 +82,9 @@ export function Modal({
           transition={{ duration: 0.18 }}
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           style={{
-            backgroundColor: 'rgba(10, 6, 18, 0.6)',
-            backdropFilter: 'blur(20px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            backdropFilter: 'blur(24px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(180%)',
           }}
         >
           <motion.div
@@ -94,7 +94,7 @@ export function Modal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -10 }}
             transition={spring.gentle}
-            className={`glass-strong rounded-card-lg p-8 w-full ${sizeClass[size]} relative`}
+            className={`glass-strong rounded-card-lg p-8 w-full ${sizeClass[size]} relative bg-bg-dark/85 border-white/15`}
           >
             {showClose && (
               <button
