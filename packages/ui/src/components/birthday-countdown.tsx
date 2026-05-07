@@ -109,7 +109,7 @@ export function BirthdayCountdown({
 
   // ---- "future" state ----
   return (
-    <GlassCard variant="default" hover className={className}>
+    <GlassCard variant="default" className={className}>
       <div className="flex flex-col items-center text-center gap-1 py-2">
         {decorationEmoji && (
           <div

@@ -578,13 +578,13 @@ function PlaygroundInner() {
               </p>
             </GlassCard>
 
-            <GlassCard variant="strong" hover>
+            <GlassCard variant="strong" hoverGlow="primary">
               <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
-                strong + hover
+                hoverGlow primary
               </p>
-              <h3 className="text-xl font-semibold mb-2">Lift on hover</h3>
+              <h3 className="text-xl font-semibold mb-2">Glow on hover</h3>
               <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed">
-                60px blur, 200% saturation. A soft 2px spring lift on hover — opt in per card.
+                A whisper-quiet halo blooms in over ~700ms with a 240ms delay. The card itself stays still.
               </p>
             </GlassCard>
 

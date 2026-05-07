@@ -22,15 +22,11 @@ describe('<GlassCard>', () => {
   it('applies a glow halo via inline box-shadow when glow is set', () => {
     const { container } = render(<GlassCard glow="primary">x</GlassCard>);
     const el = container.firstChild as HTMLElement;
-    // The glow rgba is composed into the inline box-shadow alongside the
-    // theme card shadow so it can't be clobbered by the inline style.
     expect(el.getAttribute('data-glow')).toBe('primary');
     expect(el.style.boxShadow).toContain('rgba(139, 92, 246');
   });
 
   it('does not apply a persistent glow halo when glow="none"', () => {
-    // hover=true is the default, but at rest (no mouseenter) the hover glow
-    // should NOT be in the computed boxShadow.
     const { container } = render(<GlassCard glow="none">x</GlassCard>);
     const el = container.firstChild as HTMLElement;
     expect(el.getAttribute('data-glow')).toBeNull();
@@ -39,42 +35,23 @@ describe('<GlassCard>', () => {
     expect(el.style.boxShadow).not.toContain('rgba(16, 185, 129');
   });
 
-  it('hover=false (default) does not wire up the hover glow', () => {
+  it('default card has no hover-glow wired up', () => {
     const { container } = render(<GlassCard>x</GlassCard>);
     const el = container.firstChild as HTMLElement;
-    // Default is opt-in: no hover lift, no hover glow attribute, clean shadow at rest.
     expect(el.style.boxShadow).not.toContain('rgba(139, 92, 246');
     expect(el.getAttribute('data-hover-glow')).toBeNull();
+    // Hover is a no-op when not opted in.
+    fireEvent.mouseEnter(el);
+    expect(el.style.boxShadow).not.toContain('rgba(139, 92, 246');
   });
 
-  it('applies the hover glow on mouseEnter and removes on mouseLeave when opted in', () => {
-    const { container } = render(
-      <GlassCard hover hoverGlow="primary">x</GlassCard>,
-    );
+  it('fades the hover glow in on mouseEnter and out on mouseLeave when opted in', () => {
+    const { container } = render(<GlassCard hoverGlow="primary">x</GlassCard>);
     const el = container.firstChild as HTMLElement;
     expect(el.style.boxShadow).not.toContain('rgba(139, 92, 246');
     fireEvent.mouseEnter(el);
     expect(el.style.boxShadow).toContain('rgba(139, 92, 246');
     fireEvent.mouseLeave(el);
-    expect(el.style.boxShadow).not.toContain('rgba(139, 92, 246');
-  });
-
-  it('hover=false disables both lift and hover glow', () => {
-    const { container } = render(<GlassCard hover={false}>x</GlassCard>);
-    const el = container.firstChild as HTMLElement;
-    expect(el.getAttribute('data-hover-glow')).toBeNull();
-    fireEvent.mouseEnter(el);
-    // Without hover, mouseEnter is a no-op — boxShadow stays clean.
-    expect(el.style.boxShadow).not.toContain('rgba(139, 92, 246');
-  });
-
-  it('hover with hoverGlow="none" enables lift but no glow', () => {
-    const { container } = render(
-      <GlassCard hover hoverGlow="none">x</GlassCard>,
-    );
-    const el = container.firstChild as HTMLElement;
-    expect(el.getAttribute('data-hover-glow')).toBeNull();
-    fireEvent.mouseEnter(el);
     expect(el.style.boxShadow).not.toContain('rgba(139, 92, 246');
   });
 
