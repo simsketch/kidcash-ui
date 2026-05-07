@@ -475,7 +475,7 @@ function PlaygroundInner() {
                 href="https://www.kidcashapp.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass-strong inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-transform hover:scale-[1.03] hover:bg-[var(--theme-card-bg)]"
+                className="glass-strong inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-colors hover:bg-[var(--theme-card-bg)]"
                 style={{ color: 'var(--theme-text-primary)' }}
               >
                 <span aria-hidden>✨</span>

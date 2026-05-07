@@ -105,12 +105,11 @@ function ThemeCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ ...spring.gentle, delay: index * 0.04 }}
-      whileHover={{ scale: 1.01 }}
-      whileTap={{ scale: 0.98 }}
-      className={`glass rounded-card p-4 text-left cursor-pointer transition-shadow w-full ${
+      whileTap={{ scale: 0.985 }}
+      className={`glass rounded-card p-4 text-left cursor-pointer w-full ${
         selected
-          ? 'shadow-glow-primary ring-2 ring-primary-light/70'
-          : 'ring-1 ring-white/10 hover:ring-white/20'
+          ? 'ring-2 ring-primary-light/70'
+          : 'ring-1 ring-white/10 hover:ring-white/25'
       }`}
       style={{
         backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.05))',
