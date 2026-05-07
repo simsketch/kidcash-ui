@@ -77,6 +77,7 @@ You can read more about the family-finance philosophy behind it on the [KidCash 
 ## Documentation & demos
 
 - 📖 **Live playground:** [kit.kidcashapp.com](https://kit.kidcashapp.com)
+- 📚 **Component reference:** [kit.kidcashapp.com/components](https://kit.kidcashapp.com/components) — one page per primitive, with examples and API
 - 📦 **npm package:** [npmjs.com/package/@kidcash/ui](https://www.npmjs.com/package/@kidcash/ui)
 - 🐛 **Issues:** [github.com/simsketch/kidcash-ui/issues](https://github.com/simsketch/kidcash-ui/issues)
 - 💬 **Discussions:** [github.com/simsketch/kidcash-ui/discussions](https://github.com/simsketch/kidcash-ui/discussions)

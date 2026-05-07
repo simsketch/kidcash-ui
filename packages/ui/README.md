@@ -77,8 +77,10 @@ If this kit is useful, the easiest way to support it is to [download KidCash](ht
 
 ## Links
 
-- 📖 **Repo + docs:** [github.com/simsketch/kidcash-ui](https://github.com/simsketch/kidcash-ui)
+- 📖 **Live playground:** [kit.kidcashapp.com](https://kit.kidcashapp.com)
+- 📚 **Component reference:** [kit.kidcashapp.com/components](https://kit.kidcashapp.com/components) — one page per primitive
 - 🌐 **The app this kit powers:** [kidcashapp.com](https://www.kidcashapp.com)
+- 🛠 **GitHub repo:** [github.com/simsketch/kidcash-ui](https://github.com/simsketch/kidcash-ui)
 - 🐛 **Issues:** [github.com/simsketch/kidcash-ui/issues](https://github.com/simsketch/kidcash-ui/issues)
 - 📰 **Family-finance writing:** [KidCash blog](https://www.kidcashapp.com/blog)
 
