@@ -17,10 +17,13 @@ export interface GlassCardProps extends Omit<HTMLMotionProps<'div'>, 'children'>
 // Halo ring shadows used when `glow` (or `hoverGlow`) is set. These are
 // composed onto the theme card shadow so they can't be clobbered by the
 // inline style override.
+// Soft, low-alpha halos. Two layers: an inner glow that just kisses the edge
+// and a wider, very faint outer wash. Tuned to feel like ambient room light
+// — present but not announcing itself.
 const GLOW_SHADOWS: Record<'primary' | 'accent' | 'success', string> = {
-  primary: '0 0 32px rgba(139, 92, 246, 0.22), 0 0 72px rgba(139, 92, 246, 0.10)',
-  accent: '0 0 32px rgba(6, 182, 212, 0.22), 0 0 72px rgba(6, 182, 212, 0.10)',
-  success: '0 0 32px rgba(16, 185, 129, 0.22), 0 0 72px rgba(16, 185, 129, 0.10)',
+  primary: '0 0 22px rgba(139, 92, 246, 0.14), 0 0 56px rgba(139, 92, 246, 0.06)',
+  accent: '0 0 22px rgba(6, 182, 212, 0.14), 0 0 56px rgba(6, 182, 212, 0.06)',
+  success: '0 0 22px rgba(16, 185, 129, 0.14), 0 0 56px rgba(16, 185, 129, 0.06)',
 };
 
 const BASE_SHADOW =
@@ -79,7 +82,9 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
       WebkitBackdropFilter: `blur(${blur}px) saturate(180%) brightness(1.0)`,
       boxShadow: restingShadow,
       color: 'var(--theme-text-primary, #fafafa)',
-      transition: 'box-shadow 450ms ease 120ms',
+      // Long, eased fade with a brief delay so the halo blooms in/out rather
+      // than snapping. Curve borrowed from --ease-smooth in the preset.
+      transition: 'box-shadow 600ms cubic-bezier(0.32, 0.72, 0, 1) 140ms',
       ...(style as object),
     } as React.CSSProperties;
 
@@ -91,8 +96,8 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
         className={`${variantClass} rounded-card p-6 ${className}`}
         style={themeStyle}
         initial={{ y: 0, scale: 1 }}
-        whileHover={hover ? { y: -4, scale: 1.005 } : undefined}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        whileHover={hover ? { y: -2, scale: 1.004 } : undefined}
+        transition={{ type: 'spring', stiffness: 240, damping: 28 }}
         data-glow={glow !== 'none' ? glow : undefined}
         data-hover-glow={enableHoverGlow ? hoverGlow : undefined}
         onMouseEnter={

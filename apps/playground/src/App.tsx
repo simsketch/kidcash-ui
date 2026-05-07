@@ -584,7 +584,7 @@ function PlaygroundInner() {
               </p>
               <h3 className="text-xl font-semibold mb-2">Lift on hover</h3>
               <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed">
-                60px blur and a 200% saturation boost. Springs up 4px when the cursor lands.
+                60px blur, 200% saturation. A soft 2px spring lift on hover — opt in per card.
               </p>
             </GlassCard>
 
@@ -594,7 +594,7 @@ function PlaygroundInner() {
               </p>
               <h3 className="text-xl font-semibold mb-2">Halo of light</h3>
               <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed">
-                Always-on two-layer halo (32px + 72px) with a 120ms transition delay. Subtle by default — use sparingly.
+                Always-on ambient halo, low-alpha and slow-eased. Use sparingly — it draws the eye.
               </p>
             </GlassCard>
           </div>

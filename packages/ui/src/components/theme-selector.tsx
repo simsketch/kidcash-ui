@@ -105,7 +105,7 @@ function ThemeCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ ...spring.gentle, delay: index * 0.04 }}
-      whileHover={{ y: -2, scale: 1.01 }}
+      whileHover={{ scale: 1.01 }}
       whileTap={{ scale: 0.98 }}
       className={`glass rounded-card p-4 text-left cursor-pointer transition-shadow w-full ${
         selected
