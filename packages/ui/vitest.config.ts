@@ -1,5 +1,9 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
@@ -16,8 +20,10 @@ export default defineConfig({
   resolve: {
     alias: {
       // In the test environment, replace framer-motion with a lightweight stub
-      // so AnimatePresence doesn't hold exited elements in the DOM.
-      'framer-motion': '/Users/simsketch/repos/kidcash-ui/packages/ui/src/test/framer-motion-mock.tsx',
+      // so AnimatePresence doesn't hold exited elements in the DOM. Resolved
+      // from this config's own directory so it works on any machine (Mac dev
+      // and Linux CI both).
+      'framer-motion': path.resolve(__dirname, 'src/test/framer-motion-mock.tsx'),
     },
   },
 });
