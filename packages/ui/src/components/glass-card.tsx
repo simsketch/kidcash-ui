@@ -15,22 +15,22 @@ export interface GlassCardProps extends Omit<HTMLMotionProps<'div'>, 'children'>
   children: React.ReactNode;
 }
 
-// Whisper-quiet halos. Two layers: an inner glow that just kisses the edge
-// and a wider, very faint outer wash. Tuned to feel like ambient room light
-// — present but not announcing itself.
+// Two-layer halos. An inner glow that defines the edge plus a wider outer
+// wash for atmospheric falloff. Alphas tuned so the always-on variants
+// read clearly on a dark backdrop without overpowering surrounding cards.
 const GLOW_SHADOWS: Record<'primary' | 'accent' | 'success', string> = {
-  primary: '0 0 18px rgba(139, 92, 246, 0.10), 0 0 48px rgba(139, 92, 246, 0.04)',
-  accent: '0 0 18px rgba(6, 182, 212, 0.10), 0 0 48px rgba(6, 182, 212, 0.04)',
-  success: '0 0 18px rgba(16, 185, 129, 0.10), 0 0 48px rgba(16, 185, 129, 0.04)',
+  primary: '0 0 24px rgba(139, 92, 246, 0.30), 0 0 64px rgba(139, 92, 246, 0.14)',
+  accent: '0 0 24px rgba(6, 182, 212, 0.30), 0 0 64px rgba(6, 182, 212, 0.14)',
+  success: '0 0 24px rgba(16, 185, 129, 0.30), 0 0 64px rgba(16, 185, 129, 0.14)',
 };
 
 const BASE_SHADOW =
   'inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 20px rgba(0,0,0,0.25)';
 
-// Long fade with a generous delay so the halo blooms in like a slow exhale
-// instead of tracking the cursor. Curve borrowed from --ease-smooth.
+// Smooth fade with just enough delay to feel intentional rather than
+// cursor-tracking. Curve borrowed from --ease-smooth in the preset.
 const HOVER_TRANSITION =
-  'box-shadow 700ms cubic-bezier(0.32, 0.72, 0, 1) 240ms';
+  'box-shadow 500ms cubic-bezier(0.32, 0.72, 0, 1) 80ms';
 
 export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
   (
