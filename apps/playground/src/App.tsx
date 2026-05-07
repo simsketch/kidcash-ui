@@ -546,10 +546,22 @@ function PlaygroundInner() {
               Press <Keyboard>⌘</Keyboard> <Keyboard>K</Keyboard> to open the command palette
             </p>
             <div className="flex items-center justify-center gap-3 pt-4">
-              <Button size="lg" iconLeft={<span>✨</span>}>
-                Get started
+              <Button
+                size="lg"
+                iconLeft={<span>✨</span>}
+                onClick={() =>
+                  window.open('https://www.npmjs.com/package/@kidcash/ui', '_blank', 'noopener')
+                }
+              >
+                Install on npm
               </Button>
-              <Button size="lg" variant="secondary">
+              <Button
+                size="lg"
+                variant="secondary"
+                onClick={() =>
+                  window.open('https://github.com/simsketch/kidcash-ui#readme', '_blank', 'noopener')
+                }
+              >
                 Read the docs
               </Button>
             </div>
