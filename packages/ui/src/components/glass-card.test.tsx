@@ -39,17 +39,18 @@ describe('<GlassCard>', () => {
     expect(el.style.boxShadow).not.toContain('rgba(16, 185, 129');
   });
 
-  it('hover=true (default) does not show hover glow at rest', () => {
+  it('hover=false (default) does not wire up the hover glow', () => {
     const { container } = render(<GlassCard>x</GlassCard>);
     const el = container.firstChild as HTMLElement;
-    // At rest, no rgba glow values should appear.
+    // Default is opt-in: no hover lift, no hover glow attribute, clean shadow at rest.
     expect(el.style.boxShadow).not.toContain('rgba(139, 92, 246');
-    // But the hover glow is wired up via data attribute.
-    expect(el.getAttribute('data-hover-glow')).toBe('primary');
+    expect(el.getAttribute('data-hover-glow')).toBeNull();
   });
 
-  it('applies the hover glow on mouseEnter and removes on mouseLeave', () => {
-    const { container } = render(<GlassCard>x</GlassCard>);
+  it('applies the hover glow on mouseEnter and removes on mouseLeave when opted in', () => {
+    const { container } = render(
+      <GlassCard hover hoverGlow="primary">x</GlassCard>,
+    );
     const el = container.firstChild as HTMLElement;
     expect(el.style.boxShadow).not.toContain('rgba(139, 92, 246');
     fireEvent.mouseEnter(el);
@@ -67,8 +68,10 @@ describe('<GlassCard>', () => {
     expect(el.style.boxShadow).not.toContain('rgba(139, 92, 246');
   });
 
-  it('hoverGlow="none" disables only the hover glow but keeps the lift', () => {
-    const { container } = render(<GlassCard hoverGlow="none">x</GlassCard>);
+  it('hover with hoverGlow="none" enables lift but no glow', () => {
+    const { container } = render(
+      <GlassCard hover hoverGlow="none">x</GlassCard>,
+    );
     const el = container.firstChild as HTMLElement;
     expect(el.getAttribute('data-hover-glow')).toBeNull();
     fireEvent.mouseEnter(el);

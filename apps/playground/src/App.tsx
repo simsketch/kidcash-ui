@@ -564,7 +564,7 @@ function PlaygroundInner() {
             <SectionHeader
               title="Glass cards"
               variant="sunset"
-              subtitle="Multi-layer translucency with backdrop saturation. Hover to feel the spring."
+              subtitle="Multi-layer translucency with backdrop saturation. Lift and glow are opt-in per card."
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -588,13 +588,13 @@ function PlaygroundInner() {
               </p>
             </GlassCard>
 
-            <GlassCard variant="strong" hover glow="primary">
+            <GlassCard variant="strong" glow="primary">
               <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
                 glow primary
               </p>
               <h3 className="text-xl font-semibold mb-2">Halo of light</h3>
               <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed">
-                Two-layer glow ring (40px + 80px). Use sparingly — it draws the eye.
+                Always-on two-layer halo (32px + 72px) with a 120ms transition delay. Subtle by default — use sparingly.
               </p>
             </GlassCard>
           </div>

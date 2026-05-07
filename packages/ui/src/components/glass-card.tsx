@@ -5,9 +5,9 @@ import { forwardRef } from 'react';
 export interface GlassCardProps extends Omit<HTMLMotionProps<'div'>, 'children'> {
   /** Glass intensity. `strong` doubles the blur and lifts the highlight. */
   variant?: 'default' | 'strong';
-  /** Spring-lift on hover. Default true. */
+  /** Spring-lift on hover. Default false — opt in per card to avoid site-wide motion. */
   hover?: boolean;
-  /** Glow color shown on hover (when hover=true). Default 'primary'. */
+  /** Glow color shown on hover (only when hover=true). Default 'none'. */
   hoverGlow?: 'primary' | 'accent' | 'success' | 'none';
   /** Always-on glow ring (independent of hover). Default 'none'. */
   glow?: 'primary' | 'accent' | 'success' | 'none';
@@ -18,9 +18,9 @@ export interface GlassCardProps extends Omit<HTMLMotionProps<'div'>, 'children'>
 // composed onto the theme card shadow so they can't be clobbered by the
 // inline style override.
 const GLOW_SHADOWS: Record<'primary' | 'accent' | 'success', string> = {
-  primary: '0 0 40px rgba(139, 92, 246, 0.45), 0 0 80px rgba(139, 92, 246, 0.25)',
-  accent: '0 0 40px rgba(6, 182, 212, 0.45), 0 0 80px rgba(6, 182, 212, 0.25)',
-  success: '0 0 40px rgba(16, 185, 129, 0.45), 0 0 80px rgba(16, 185, 129, 0.2)',
+  primary: '0 0 32px rgba(139, 92, 246, 0.22), 0 0 72px rgba(139, 92, 246, 0.10)',
+  accent: '0 0 32px rgba(6, 182, 212, 0.22), 0 0 72px rgba(6, 182, 212, 0.10)',
+  success: '0 0 32px rgba(16, 185, 129, 0.22), 0 0 72px rgba(16, 185, 129, 0.10)',
 };
 
 const BASE_SHADOW =
@@ -30,8 +30,8 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
   (
     {
       variant = 'default',
-      hover = true,
-      hoverGlow = 'primary',
+      hover = false,
+      hoverGlow = 'none',
       glow = 'none',
       className = '',
       style,
@@ -79,7 +79,7 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
       WebkitBackdropFilter: `blur(${blur}px) saturate(180%) brightness(1.0)`,
       boxShadow: restingShadow,
       color: 'var(--theme-text-primary, #fafafa)',
-      transition: 'box-shadow 350ms ease',
+      transition: 'box-shadow 450ms ease 120ms',
       ...(style as object),
     } as React.CSSProperties;
 
