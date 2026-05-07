@@ -45,9 +45,16 @@ function applyThemeToDocument(name: ThemeName) {
   root.style.setProperty('--theme-danger-border', t.dangerBorder);
   root.style.setProperty('--theme-danger-text', t.dangerText);
   root.style.setProperty('--theme-progress-gradient', t.progressGradient);
+  root.style.setProperty('--theme-primary-gradient', t.primaryGradient);
+  root.style.setProperty('--theme-primary-shadow', t.primaryShadow);
+  root.style.setProperty('--theme-shimmer-color', t.shimmerColor);
   root.style.setProperty('--theme-orb1', t.orb1);
   root.style.setProperty('--theme-orb2', t.orb2);
   root.style.setProperty('--theme-orb3', t.orb3);
+
+  // data-theme-mode lets pure-CSS rules (e.g. preset.css shimmer fallback)
+  // discriminate without reading every theme variable.
+  root.setAttribute('data-theme-mode', t.mode);
 
   if (isLightTheme(name)) {
     root.classList.remove('dark');

@@ -21,14 +21,28 @@ const sizeMap: Record<Size, string> = {
 };
 
 const variantMap: Record<Variant, string> = {
-  primary: 'bg-gradient-aurora text-white shadow-glow-primary',
+  primary: 'text-white',
   secondary: 'glass hover:glass-strong',
   ghost: '',
-  destructive: 'bg-gradient-flame text-white',
+  destructive: 'text-white',
 };
 
+// Primary + destructive surfaces are theme-aware: each theme owns its own
+// gradient + glow shadow so warm themes don't render the aurora purple
+// gradient by default. Falls back to the iconic aurora palette + danger
+// gradient when no provider is mounted.
+const AURORA_FALLBACK =
+  'linear-gradient(135deg, #7c3aed 0%, #a855f7 20%, #c026d3 40%, #ec4899 55%, #8b5cf6 75%, #06b6d4 100%)';
+const AURORA_SHADOW_FALLBACK =
+  '0 0 40px rgba(139, 92, 246, 0.4), 0 0 80px rgba(139, 92, 246, 0.2)';
+const FLAME_FALLBACK =
+  'linear-gradient(135deg, #ef4444 0%, #f59e0b 50%, #ec4899 100%)';
+
 const variantStyle: Record<Variant, React.CSSProperties> = {
-  primary: {},
+  primary: {
+    backgroundImage: `var(--theme-primary-gradient, ${AURORA_FALLBACK})`,
+    boxShadow: `var(--theme-primary-shadow, ${AURORA_SHADOW_FALLBACK})`,
+  },
   secondary: {
     backgroundColor: 'var(--theme-card-bg, rgba(255, 255, 255, 0.05))',
     borderColor: 'var(--theme-card-border, rgba(255, 255, 255, 0.1))',
@@ -37,7 +51,9 @@ const variantStyle: Record<Variant, React.CSSProperties> = {
   ghost: {
     color: 'var(--theme-text-primary, #fafafa)',
   },
-  destructive: {},
+  destructive: {
+    backgroundImage: `var(--theme-danger-bg, ${FLAME_FALLBACK})`,
+  },
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(

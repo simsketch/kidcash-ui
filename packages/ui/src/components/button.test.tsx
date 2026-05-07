@@ -36,7 +36,11 @@ describe('<Button>', () => {
     );
     const btn = screen.getByRole('button');
     expect(btn.className).toContain('h-12');
-    expect(btn.className).toContain('bg-gradient-flame');
+    // Destructive surface comes from the theme `dangerBg` var (with a flame
+    // gradient fallback when no provider is mounted), applied via inline
+    // backgroundImage rather than a Tailwind utility class.
+    expect(btn.className).toContain('text-white');
+    expect(btn.style.backgroundImage).toContain('--theme-danger-bg');
   });
 
   it('renders iconLeft when not loading', () => {

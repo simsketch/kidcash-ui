@@ -4,6 +4,7 @@ import { spring } from '../tokens/motion';
 import {
   themeNames,
   themes,
+  type ThemeMode,
   type ThemeName,
 } from '../themes/themes';
 import { useTheme } from '../themes/provider';
@@ -64,6 +65,7 @@ export function ThemeSelector({
               label={t.label}
               description={t.description}
               previewColors={t.previewColors}
+              mode={t.mode}
               selected={selected}
               index={i}
               onSelect={() => setThemeName(name)}
@@ -80,6 +82,7 @@ interface ThemeCardProps {
   label: string;
   description: string;
   previewColors: [string, string, string, string];
+  mode: ThemeMode;
   selected: boolean;
   index: number;
   onSelect: () => void;
@@ -90,6 +93,7 @@ function ThemeCard({
   label,
   description,
   previewColors,
+  mode,
   selected,
   index,
   onSelect,
@@ -117,14 +121,31 @@ function ThemeCard({
         color: 'var(--theme-text-primary, #fafafa)',
       }}
     >
-      <div className="flex items-center gap-2 mb-3" aria-hidden>
-        {previewColors.map((color, i) => (
-          <span
-            key={i}
-            className="block w-5 h-5 rounded-full border border-white/15"
-            style={{ background: color }}
-          />
-        ))}
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <div className="flex items-center gap-2" aria-hidden>
+          {previewColors.map((color, i) => (
+            <span
+              key={i}
+              className="block w-5 h-5 rounded-full border border-white/15"
+              style={{ background: color }}
+            />
+          ))}
+        </div>
+        <span
+          aria-label={`${mode} theme`}
+          className="text-[10px] uppercase tracking-widest font-mono px-2 py-0.5 rounded-full shrink-0"
+          style={{
+            color: mode === 'light' ? '#451a03' : '#fef3c7',
+            backgroundColor:
+              mode === 'light' ? 'rgba(251, 191, 36, 0.25)' : 'rgba(99, 102, 241, 0.25)',
+            border:
+              mode === 'light'
+                ? '1px solid rgba(251, 191, 36, 0.4)'
+                : '1px solid rgba(99, 102, 241, 0.4)',
+          }}
+        >
+          {mode === 'light' ? '☀ light' : '☾ dark'}
+        </span>
       </div>
       <div className="flex items-baseline justify-between gap-2 mb-1">
         <span

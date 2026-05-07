@@ -21,10 +21,15 @@ export type ThemeName =
   | 'lemon-fizz'
   | 'mint-breeze';
 
+export type ThemeMode = 'light' | 'dark';
+
 export interface Theme {
   name: ThemeName;
   label: string;
   description: string;
+  /** Whether this theme reads as light- or dark-mode. Drives shimmer color,
+   *  ThemeSelector badge, and any consumer that needs to know surface tone. */
+  mode: ThemeMode;
   // Background gradient for body
   background: string;
   // Glass card styling
@@ -40,7 +45,12 @@ export interface Theme {
   textPrimary: string;
   textSecondary: string;
   textMuted: string;
-  // Buttons
+  // Primary button surface — per-theme so warm themes don't render with the
+  // aurora purple gradient by default.
+  primaryGradient: string;
+  /** Drop shadow on primary buttons. Should harmonise with `primaryGradient`. */
+  primaryShadow: string;
+  // Status colors
   successBg: string;
   successBorder: string;
   successText: string;
@@ -49,6 +59,9 @@ export interface Theme {
   dangerText: string;
   // Progress bars
   progressGradient: string;
+  // Shimmer overlay color for skeletons. White on dark themes is invisible
+  // on light backgrounds — pick per mode.
+  shimmerColor: string;
   // Ambient orb colors (for floating background effects)
   orb1: string;
   orb2: string;
@@ -62,6 +75,7 @@ export const themes: Record<ThemeName, Theme> = {
     name: 'aurora',
     label: 'Aurora',
     description: 'Deep indigo with multi-color aurora shimmer',
+    mode: 'dark',
     background: 'linear-gradient(135deg, #0f0b1a 0%, #1a1040 30%, #0d1117 60%, #111827 100%)',
     cardBg: 'rgba(255, 255, 255, 0.05)',
     cardBorder: 'rgba(139, 92, 246, 0.15)',
@@ -73,6 +87,9 @@ export const themes: Record<ThemeName, Theme> = {
     textPrimary: '#f1f5f9',
     textSecondary: '#cbd5e1',
     textMuted: '#94a3b8',
+    primaryGradient:
+      'linear-gradient(135deg, #7c3aed 0%, #a855f7 20%, #c026d3 40%, #ec4899 55%, #8b5cf6 75%, #06b6d4 100%)',
+    primaryShadow: '0 0 40px rgba(139, 92, 246, 0.4), 0 0 80px rgba(139, 92, 246, 0.2)',
     successBg: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
     successBorder: 'rgba(16, 185, 129, 0.3)',
     successText: '#ffffff',
@@ -80,6 +97,7 @@ export const themes: Record<ThemeName, Theme> = {
     dangerBorder: 'rgba(239, 68, 68, 0.3)',
     dangerText: '#ffffff',
     progressGradient: 'linear-gradient(90deg, #a78bfa 0%, #ec4899 50%, #06b6d4 100%)',
+    shimmerColor: 'rgba(255, 255, 255, 0.10)',
     orb1: 'rgba(139, 92, 246, 0.15)',
     orb2: 'rgba(52, 211, 153, 0.1)',
     orb3: 'rgba(6, 182, 212, 0.1)',
@@ -89,6 +107,7 @@ export const themes: Record<ThemeName, Theme> = {
     name: 'frosted-crystal',
     label: 'Frosted Crystal',
     description: 'Minimal dark purple with crystalline glass',
+    mode: 'dark',
     background: 'linear-gradient(135deg, #0c0015 0%, #1a0a2e 40%, #0f0520 70%, #0a0012 100%)',
     cardBg: 'rgba(255, 255, 255, 0.04)',
     cardBorder: 'rgba(200, 180, 255, 0.1)',
@@ -99,7 +118,10 @@ export const themes: Record<ThemeName, Theme> = {
     accentGlow: 'rgba(196, 181, 253, 0.2)',
     textPrimary: '#ede9fe',
     textSecondary: '#c4b5fd',
-    textMuted: '#7c6fad',
+    textMuted: '#a89cd1',
+    primaryGradient:
+      'linear-gradient(135deg, #c4b5fd 0%, #a78bfa 50%, #7c3aed 100%)',
+    primaryShadow: '0 0 40px rgba(167, 139, 250, 0.4), 0 0 80px rgba(167, 139, 250, 0.2)',
     successBg: 'linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%)',
     successBorder: 'rgba(167, 139, 250, 0.3)',
     successText: '#ffffff',
@@ -107,6 +129,7 @@ export const themes: Record<ThemeName, Theme> = {
     dangerBorder: 'rgba(244, 114, 182, 0.3)',
     dangerText: '#ffffff',
     progressGradient: 'linear-gradient(90deg, #c4b5fd 0%, #e9d5ff 50%, #a78bfa 100%)',
+    shimmerColor: 'rgba(255, 255, 255, 0.10)',
     orb1: 'rgba(196, 181, 253, 0.08)',
     orb2: 'rgba(233, 213, 255, 0.06)',
     orb3: 'rgba(167, 139, 250, 0.08)',
@@ -116,6 +139,7 @@ export const themes: Record<ThemeName, Theme> = {
     name: 'candy-glow',
     label: 'Candy Glow',
     description: 'Vibrant neon pink, purple, and cyan',
+    mode: 'dark',
     background: 'linear-gradient(135deg, #1a0025 0%, #2d0040 30%, #1a002e 60%, #0f001a 100%)',
     cardBg: 'rgba(255, 255, 255, 0.06)',
     cardBorder: 'rgba(236, 72, 153, 0.2)',
@@ -126,7 +150,10 @@ export const themes: Record<ThemeName, Theme> = {
     accentGlow: 'rgba(244, 114, 182, 0.3)',
     textPrimary: '#fdf2f8',
     textSecondary: '#f9a8d4',
-    textMuted: '#9d5680',
+    textMuted: '#d6a2bd',
+    primaryGradient:
+      'linear-gradient(135deg, #f472b6 0%, #ec4899 35%, #c026d3 65%, #22d3ee 100%)',
+    primaryShadow: '0 0 40px rgba(236, 72, 153, 0.4), 0 0 80px rgba(236, 72, 153, 0.2)',
     successBg: 'linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%)',
     successBorder: 'rgba(34, 211, 238, 0.3)',
     successText: '#ffffff',
@@ -134,6 +161,7 @@ export const themes: Record<ThemeName, Theme> = {
     dangerBorder: 'rgba(251, 113, 133, 0.3)',
     dangerText: '#ffffff',
     progressGradient: 'linear-gradient(90deg, #f472b6 0%, #c084fc 50%, #22d3ee 100%)',
+    shimmerColor: 'rgba(255, 255, 255, 0.10)',
     orb1: 'rgba(236, 72, 153, 0.12)',
     orb2: 'rgba(192, 132, 252, 0.1)',
     orb3: 'rgba(34, 211, 238, 0.1)',
@@ -143,6 +171,7 @@ export const themes: Record<ThemeName, Theme> = {
     name: 'ocean-depth',
     label: 'Ocean Depth',
     description: 'Deep navy with calm cyan and teal glass',
+    mode: 'dark',
     background: 'linear-gradient(135deg, #020617 0%, #0c1e3a 30%, #071525 60%, #030712 100%)',
     cardBg: 'rgba(6, 182, 212, 0.05)',
     cardBorder: 'rgba(6, 182, 212, 0.12)',
@@ -153,7 +182,10 @@ export const themes: Record<ThemeName, Theme> = {
     accentGlow: 'rgba(34, 211, 238, 0.2)',
     textPrimary: '#e0f2fe',
     textSecondary: '#7dd3fc',
-    textMuted: '#3b82a0',
+    textMuted: '#7aa6c4',
+    primaryGradient:
+      'linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #3b82f6 100%)',
+    primaryShadow: '0 0 40px rgba(34, 211, 238, 0.4), 0 0 80px rgba(34, 211, 238, 0.2)',
     successBg: 'linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%)',
     successBorder: 'rgba(45, 212, 191, 0.3)',
     successText: '#ffffff',
@@ -161,6 +193,7 @@ export const themes: Record<ThemeName, Theme> = {
     dangerBorder: 'rgba(248, 113, 113, 0.3)',
     dangerText: '#ffffff',
     progressGradient: 'linear-gradient(90deg, #06b6d4 0%, #22d3ee 50%, #2dd4bf 100%)',
+    shimmerColor: 'rgba(255, 255, 255, 0.10)',
     orb1: 'rgba(6, 182, 212, 0.1)',
     orb2: 'rgba(45, 212, 191, 0.08)',
     orb3: 'rgba(59, 130, 246, 0.08)',
@@ -170,6 +203,7 @@ export const themes: Record<ThemeName, Theme> = {
     name: 'sunset-dunes',
     label: 'Sunset Dunes',
     description: 'Warm amber and golden sand tones',
+    mode: 'dark',
     background: 'linear-gradient(135deg, #1a0f00 0%, #2d1a05 30%, #1f1208 60%, #0f0a04 100%)',
     cardBg: 'rgba(245, 158, 11, 0.05)',
     cardBorder: 'rgba(245, 158, 11, 0.15)',
@@ -180,7 +214,10 @@ export const themes: Record<ThemeName, Theme> = {
     accentGlow: 'rgba(251, 191, 36, 0.2)',
     textPrimary: '#fef3c7',
     textSecondary: '#fcd34d',
-    textMuted: '#92712e',
+    textMuted: '#c4a673',
+    primaryGradient:
+      'linear-gradient(135deg, #fbbf24 0%, #fb923c 35%, #f97316 65%, #ef4444 100%)',
+    primaryShadow: '0 0 40px rgba(251, 146, 60, 0.4), 0 0 80px rgba(251, 146, 60, 0.2)',
     successBg: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
     successBorder: 'rgba(251, 191, 36, 0.3)',
     successText: '#1a0f00',
@@ -188,6 +225,7 @@ export const themes: Record<ThemeName, Theme> = {
     dangerBorder: 'rgba(239, 68, 68, 0.3)',
     dangerText: '#ffffff',
     progressGradient: 'linear-gradient(90deg, #fbbf24 0%, #fb923c 50%, #f97316 100%)',
+    shimmerColor: 'rgba(255, 255, 255, 0.10)',
     orb1: 'rgba(251, 191, 36, 0.1)',
     orb2: 'rgba(251, 146, 60, 0.08)',
     orb3: 'rgba(249, 115, 22, 0.08)',
@@ -197,6 +235,7 @@ export const themes: Record<ThemeName, Theme> = {
     name: 'midnight-garden',
     label: 'Midnight Garden',
     description: 'Deep forest green with emerald glass',
+    mode: 'dark',
     background: 'linear-gradient(135deg, #021a0a 0%, #0a2e18 30%, #051f0e 60%, #010f06 100%)',
     cardBg: 'rgba(16, 185, 129, 0.05)',
     cardBorder: 'rgba(16, 185, 129, 0.12)',
@@ -207,7 +246,10 @@ export const themes: Record<ThemeName, Theme> = {
     accentGlow: 'rgba(52, 211, 153, 0.2)',
     textPrimary: '#ecfdf5',
     textSecondary: '#6ee7b7',
-    textMuted: '#2d8a5e',
+    textMuted: '#7fb59b',
+    primaryGradient:
+      'linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%)',
+    primaryShadow: '0 0 40px rgba(52, 211, 153, 0.4), 0 0 80px rgba(52, 211, 153, 0.2)',
     successBg: 'linear-gradient(135deg, #34d399 0%, #10b981 100%)',
     successBorder: 'rgba(52, 211, 153, 0.3)',
     successText: '#021a0a',
@@ -215,6 +257,7 @@ export const themes: Record<ThemeName, Theme> = {
     dangerBorder: 'rgba(248, 113, 113, 0.3)',
     dangerText: '#ffffff',
     progressGradient: 'linear-gradient(90deg, #34d399 0%, #a3e635 50%, #10b981 100%)',
+    shimmerColor: 'rgba(255, 255, 255, 0.10)',
     orb1: 'rgba(52, 211, 153, 0.1)',
     orb2: 'rgba(163, 230, 53, 0.08)',
     orb3: 'rgba(16, 185, 129, 0.1)',
@@ -224,6 +267,7 @@ export const themes: Record<ThemeName, Theme> = {
     name: 'cotton-cloud',
     label: 'Cotton Cloud',
     description: 'Light, airy lavender with soft purple accents',
+    mode: 'light',
     background: 'linear-gradient(135deg, #ffffff 0%, #f3e8ff 30%, #ede9fe 60%, #f5f3ff 100%)',
     cardBg: 'rgba(255, 255, 255, 0.9)',
     cardBorder: 'rgba(167, 139, 250, 0.25)',
@@ -235,6 +279,9 @@ export const themes: Record<ThemeName, Theme> = {
     textPrimary: '#1e1b4b',
     textSecondary: '#4c1d95',
     textMuted: '#6b7280',
+    primaryGradient:
+      'linear-gradient(135deg, #a78bfa 0%, #c084fc 35%, #ec4899 65%, #8b5cf6 100%)',
+    primaryShadow: '0 4px 20px rgba(139, 92, 246, 0.25), 0 8px 32px rgba(236, 72, 153, 0.12)',
     successBg: 'linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%)',
     successBorder: 'rgba(139, 92, 246, 0.3)',
     successText: '#ffffff',
@@ -242,6 +289,7 @@ export const themes: Record<ThemeName, Theme> = {
     dangerBorder: 'rgba(236, 72, 153, 0.3)',
     dangerText: '#ffffff',
     progressGradient: 'linear-gradient(90deg, #a78bfa 0%, #ec4899 50%, #8b5cf6 100%)',
+    shimmerColor: 'rgba(0, 0, 0, 0.06)',
     orb1: 'rgba(167, 139, 250, 0.08)',
     orb2: 'rgba(236, 72, 153, 0.06)',
     orb3: 'rgba(139, 92, 246, 0.06)',
@@ -251,6 +299,7 @@ export const themes: Record<ThemeName, Theme> = {
     name: 'lemon-fizz',
     label: 'Lemon Fizz',
     description: 'Bright, playful amber and warm sunshine',
+    mode: 'light',
     background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 30%, #fff7ed 60%, #fffbeb 100%)',
     cardBg: 'rgba(255, 255, 255, 0.9)',
     cardBorder: 'rgba(245, 158, 11, 0.25)',
@@ -262,6 +311,9 @@ export const themes: Record<ThemeName, Theme> = {
     textPrimary: '#451a03',
     textSecondary: '#92400e',
     textMuted: '#6b7280',
+    primaryGradient:
+      'linear-gradient(135deg, #d97706 0%, #ea580c 35%, #f97316 65%, #fbbf24 100%)',
+    primaryShadow: '0 4px 20px rgba(217, 119, 6, 0.25), 0 8px 32px rgba(249, 115, 22, 0.12)',
     successBg: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
     successBorder: 'rgba(251, 191, 36, 0.3)',
     successText: '#451a03',
@@ -269,6 +321,7 @@ export const themes: Record<ThemeName, Theme> = {
     dangerBorder: 'rgba(239, 68, 68, 0.3)',
     dangerText: '#ffffff',
     progressGradient: 'linear-gradient(90deg, #fbbf24 0%, #f97316 50%, #d97706 100%)',
+    shimmerColor: 'rgba(0, 0, 0, 0.06)',
     orb1: 'rgba(251, 191, 36, 0.08)',
     orb2: 'rgba(249, 115, 22, 0.06)',
     orb3: 'rgba(245, 158, 11, 0.06)',
@@ -278,6 +331,7 @@ export const themes: Record<ThemeName, Theme> = {
     name: 'mint-breeze',
     label: 'Mint Breeze',
     description: 'Fresh, clean emerald and calming teal',
+    mode: 'light',
     background: 'linear-gradient(135deg, #ffffff 0%, #ecfdf5 30%, #f0fdfa 60%, #f0fdf4 100%)',
     cardBg: 'rgba(255, 255, 255, 0.9)',
     cardBorder: 'rgba(16, 185, 129, 0.25)',
@@ -289,6 +343,9 @@ export const themes: Record<ThemeName, Theme> = {
     textPrimary: '#064e3b',
     textSecondary: '#065f46',
     textMuted: '#6b7280',
+    primaryGradient:
+      'linear-gradient(135deg, #059669 0%, #0d9488 35%, #14b8a6 65%, #34d399 100%)',
+    primaryShadow: '0 4px 20px rgba(5, 150, 105, 0.25), 0 8px 32px rgba(20, 184, 166, 0.12)',
     successBg: 'linear-gradient(135deg, #34d399 0%, #10b981 100%)',
     successBorder: 'rgba(52, 211, 153, 0.3)',
     successText: '#ffffff',
@@ -296,6 +353,7 @@ export const themes: Record<ThemeName, Theme> = {
     dangerBorder: 'rgba(248, 113, 113, 0.3)',
     dangerText: '#ffffff',
     progressGradient: 'linear-gradient(90deg, #10b981 0%, #14b8a6 50%, #059669 100%)',
+    shimmerColor: 'rgba(0, 0, 0, 0.06)',
     orb1: 'rgba(52, 211, 153, 0.08)',
     orb2: 'rgba(20, 184, 166, 0.06)',
     orb3: 'rgba(16, 185, 129, 0.06)',

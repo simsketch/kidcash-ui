@@ -196,7 +196,12 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--theme-shimmer-color, rgba(255, 255, 255, 0.10)),
+    transparent
+  );
   animation: shimmer-flow 2s linear infinite;
 }
 
