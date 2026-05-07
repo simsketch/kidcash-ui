@@ -72,7 +72,7 @@ export const themes: Record<ThemeName, Theme> = {
     accentGlow: 'rgba(167, 139, 250, 0.3)',
     textPrimary: '#f1f5f9',
     textSecondary: '#cbd5e1',
-    textMuted: '#64748b',
+    textMuted: '#94a3b8',
     successBg: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
     successBorder: 'rgba(16, 185, 129, 0.3)',
     successText: '#ffffff',

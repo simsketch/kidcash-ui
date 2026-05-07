@@ -564,37 +564,110 @@ function PlaygroundInner() {
             <SectionHeader
               title="Glass cards"
               variant="sunset"
-              subtitle="Multi-layer translucency with backdrop saturation. Lift and glow are opt-in per card."
+              subtitle="Multi-layer translucency with backdrop saturation. Two variants, three glow colors, opt in to a hover bloom or pin one always-on."
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          {/* Variants */}
+          <div className="px-2 pt-2">
+            <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
+              variants
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <GlassCard variant="default">
               <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
                 default
               </p>
               <h3 className="text-xl font-semibold mb-2">Subtle surface</h3>
-              <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed">
+              <p className="text-[var(--theme-text-secondary)] text-sm leading-relaxed">
                 40px blur, 5% white tint, inset highlight. Sits quietly on top of the aurora.
               </p>
             </GlassCard>
 
+            <GlassCard variant="strong">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
+                strong
+              </p>
+              <h3 className="text-xl font-semibold mb-2">Strong surface</h3>
+              <p className="text-[var(--theme-text-secondary)] text-sm leading-relaxed">
+                80px blur, 200% saturation, brighter highlight. Use it where the card needs to feel anchored — modals, key panels, hero figures.
+              </p>
+            </GlassCard>
+          </div>
+
+          {/* Hover-glow colors */}
+          <div className="px-2 pt-4">
+            <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
+              hoverGlow — bloom in over ~700ms, ~240ms delay
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <GlassCard variant="strong" hoverGlow="primary">
               <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
-                hoverGlow primary
+                hoverGlow="primary"
               </p>
-              <h3 className="text-xl font-semibold mb-2">Glow on hover</h3>
-              <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed">
-                A whisper-quiet halo blooms in over ~700ms with a 240ms delay. The card itself stays still.
+              <h3 className="text-xl font-semibold mb-2">Aurora violet</h3>
+              <p className="text-[var(--theme-text-secondary)] text-sm leading-relaxed">
+                Hover anywhere on the card. The halo eases in like ambient room light, then drifts out when you leave.
               </p>
             </GlassCard>
 
+            <GlassCard variant="strong" hoverGlow="accent">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
+                hoverGlow="accent"
+              </p>
+              <h3 className="text-xl font-semibold mb-2">Accent cyan</h3>
+              <p className="text-[var(--theme-text-secondary)] text-sm leading-relaxed">
+                Cooler temperature. Use it for informational, neutral, or "secondary action" cards.
+              </p>
+            </GlassCard>
+
+            <GlassCard variant="strong" hoverGlow="success">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
+                hoverGlow="success"
+              </p>
+              <h3 className="text-xl font-semibold mb-2">Success green</h3>
+              <p className="text-[var(--theme-text-secondary)] text-sm leading-relaxed">
+                Saved a goal, completed a chore, hit a milestone — wherever the user did the right thing.
+              </p>
+            </GlassCard>
+          </div>
+
+          {/* Always-on halos */}
+          <div className="px-2 pt-4">
+            <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono">
+              glow — always-on halo, draws the eye
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <GlassCard variant="strong" glow="primary">
               <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
-                glow primary
+                glow="primary"
               </p>
-              <h3 className="text-xl font-semibold mb-2">Halo of light</h3>
-              <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed">
-                Always-on ambient halo, low-alpha and slow-eased. Use sparingly — it draws the eye.
+              <h3 className="text-xl font-semibold mb-2">Pin a halo</h3>
+              <p className="text-[var(--theme-text-secondary)] text-sm leading-relaxed">
+                Use sparingly — one or two cards per screen. Great for the hero card on a dashboard.
+              </p>
+            </GlassCard>
+
+            <GlassCard variant="strong" glow="accent">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
+                glow="accent"
+              </p>
+              <h3 className="text-xl font-semibold mb-2">Accent halo</h3>
+              <p className="text-[var(--theme-text-secondary)] text-sm leading-relaxed">
+                Ambient cyan ring. Pairs with informational or onboarding cards.
+              </p>
+            </GlassCard>
+
+            <GlassCard variant="strong" glow="success">
+              <p className="text-xs uppercase tracking-widest text-[var(--theme-text-muted)] font-mono mb-3">
+                glow="success"
+              </p>
+              <h3 className="text-xl font-semibold mb-2">Success halo</h3>
+              <p className="text-[var(--theme-text-secondary)] text-sm leading-relaxed">
+                Pin it on a celebration or "you completed this" surface.
               </p>
             </GlassCard>
           </div>
