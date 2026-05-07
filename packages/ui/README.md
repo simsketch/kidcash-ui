@@ -8,6 +8,8 @@
 
 > Playful React component library extracted from [**KidCash**](https://www.kidcashapp.com), the family allowance app — liquid glass, spring physics, and 9 themes for finance, family, and kid-focused interfaces.
 
+**[→ Live playground at kit.kidcashapp.com](https://kit.kidcashapp.com)** · click any theme tile, hover the glass cards, fire confetti.
+
 **Battle-tested in production** at [kidcashapp.com](https://www.kidcashapp.com), where parents and kids manage [allowance](https://www.kidcashapp.com/allowance), [chores](https://www.kidcashapp.com/chores), and [savings goals](https://www.kidcashapp.com/save-for) together.
 
 > 🚧 **v0.1.x — early access.** API may shift before 1.0. Please pin exact versions.

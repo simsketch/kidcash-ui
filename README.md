@@ -8,6 +8,8 @@
 
 > Playful React component library extracted from [**KidCash**](https://www.kidcashapp.com), the family allowance app — liquid glass, spring physics, and 9 themes for finance, family, and kid-focused interfaces.
 
+**[→ Live playground at kit.kidcashapp.com](https://kit.kidcashapp.com)** · click any theme tile, hover the glass cards, fire confetti.
+
 **Battle-tested in production** at [kidcashapp.com](https://www.kidcashapp.com), where parents and kids manage [allowance](https://www.kidcashapp.com/allowance), [chores](https://www.kidcashapp.com/chores), and [savings goals](https://www.kidcashapp.com/save-for) together. Free, open source, MIT licensed.
 
 ```bash
@@ -74,7 +76,7 @@ You can read more about the family-finance philosophy behind it on the [KidCash 
 
 ## Documentation & demos
 
-- 📖 **Live playground:** [kit.kidcashapp.com](https://kit.kidcashapp.com) (deploying soon)
+- 📖 **Live playground:** [kit.kidcashapp.com](https://kit.kidcashapp.com)
 - 📦 **npm package:** [npmjs.com/package/@kidcash/ui](https://www.npmjs.com/package/@kidcash/ui)
 - 🐛 **Issues:** [github.com/simsketch/kidcash-ui/issues](https://github.com/simsketch/kidcash-ui/issues)
 - 💬 **Discussions:** [github.com/simsketch/kidcash-ui/discussions](https://github.com/simsketch/kidcash-ui/discussions)
