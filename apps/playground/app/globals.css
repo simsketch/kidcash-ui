@@ -4,7 +4,8 @@
 @import '@kidcash/ui/preset.css';
 
 @source "../../../packages/ui/src/**/*.tsx";
-@source "../../../packages/ui/dist/**/*.js";
+@source "../app/**/*.tsx";
+@source "../components/**/*.tsx";
 
 body {
   /* The ThemeProvider sets `--theme-background` on `<html>`. Fall back to

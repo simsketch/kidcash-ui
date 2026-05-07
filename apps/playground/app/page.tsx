@@ -1242,7 +1242,7 @@ function PlaygroundInner() {
   );
 }
 
-export function App() {
+export default function App() {
   return (
     <ThemeProvider defaultTheme="aurora">
       <ToastProvider>
