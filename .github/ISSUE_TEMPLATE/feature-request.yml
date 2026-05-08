@@ -1,0 +1,38 @@
+name: Feature request
+description: Propose an enhancement to an existing component or a new option.
+labels: ['enhancement', 'needs-triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Heads up: the kit's catalog is intentionally small. New top-level components are unlikely; new options/variants on existing components, accessibility improvements, and quality-of-life fixes are all welcome. For "how would I build X?" questions, please use [Discussions](https://github.com/simsketch/kidcash-ui/discussions) instead.
+
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      description: Which existing component, or "new component"?
+      placeholder: GlassCard
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: A short story about the use case. "I'm building X and I can't easily do Y because…"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-api
+    attributes:
+      label: Proposed API
+      description: Sketch the prop / option / behavior you'd want. Doesn't need to be final.
+      render: tsx
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Did you find a workaround in the existing API? Did another library do this differently?

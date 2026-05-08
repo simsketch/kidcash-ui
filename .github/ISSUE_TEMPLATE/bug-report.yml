@@ -1,0 +1,63 @@
+name: Bug report
+description: Something in @kidcash/ui isn't behaving the way the docs describe.
+labels: ['bug', 'needs-triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. Before filing, please skim the [live playground](https://kit.kidcashapp.com) and the [component docs](https://kit.kidcashapp.com/components) to confirm the behavior is genuinely off.
+
+  - type: input
+    id: component
+    attributes:
+      label: Which component?
+      description: e.g. `GlassCard`, `Button`, `CommandPalette`
+      placeholder: GlassCard
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: '@kidcash/ui version'
+      description: Output of `npm ls @kidcash/ui`.
+      placeholder: '0.1.4'
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe what you saw vs what you expected.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: A small code snippet, a CodeSandbox, or a tiny GitHub repo. Bug reports without a reproduction are hard to fix.
+      render: tsx
+    validations:
+      required: true
+
+  - type: input
+    id: react-version
+    attributes:
+      label: React + Tailwind version
+      description: e.g. React 19.0.0, Tailwind 4.0.2
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser / runtime
+      description: e.g. Chrome 130 on macOS, Safari 17, iOS 18
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Screenshots, error messages, console output — drop them in.
