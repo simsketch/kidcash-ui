@@ -20,8 +20,7 @@ Object.defineProperty(window, 'matchMedia', {
   }),
 });
 
-// Mock requestAnimationFrame for animation tests
-// @ts-expect-error jsdom doesn't implement rAF; this stub is sufficient for tests
+// Mock requestAnimationFrame for animation tests. The current TS lib
+// types match these signatures so no @ts-expect-error is needed.
 global.requestAnimationFrame = (cb: FrameRequestCallback) => setTimeout(cb, 0) as unknown as number;
-// @ts-expect-error matching stub for cancelAnimationFrame
 global.cancelAnimationFrame = (id: number) => clearTimeout(id as unknown as NodeJS.Timeout);
