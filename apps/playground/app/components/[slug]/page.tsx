@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { COMPONENTS, getComponent } from '@/lib/components-meta';
 import { DocsShell } from '@/components/docs/DocsShell';
 import { CodeBlock } from '@/components/docs/CodeBlock';
+import { LivePreview } from '@/components/previews/LivePreview';
 
 const SITE_URL = 'https://kit.kidcashapp.com';
 
@@ -106,6 +107,16 @@ export default async function ComponentPage({
             className="text-sm uppercase tracking-widest font-mono mb-3"
             style={{ color: 'var(--theme-text-muted, #94a3b8)' }}
           >
+            Live preview
+          </h2>
+          <LivePreview slug={comp.slug} />
+        </div>
+
+        <div className="mt-10">
+          <h2
+            className="text-sm uppercase tracking-widest font-mono mb-3"
+            style={{ color: 'var(--theme-text-muted, #94a3b8)' }}
+          >
             Example
           </h2>
           <CodeBlock code={comp.example} />
@@ -123,13 +134,14 @@ export default async function ComponentPage({
               className="text-xs uppercase tracking-widest font-mono"
               style={{ color: 'var(--theme-text-muted, #94a3b8)' }}
             >
-              Try it live
+              Want all 27 in one place?
             </p>
             <p style={{ color: 'var(--theme-text-secondary, #cbd5e1)' }}>
+              The{' '}
               <Link href="/" className="underline-offset-2 hover:underline" style={{ color: 'var(--theme-accent-primary)' }}>
-                ← Back to the playground
+                home playground
               </Link>{' '}
-              to see <strong>{comp.name}</strong> rendered with every variant. Or{' '}
+              shows every component side-by-side. Or{' '}
               <a
                 href="https://www.npmjs.com/package/@kidcash/ui"
                 target="_blank"
@@ -139,7 +151,7 @@ export default async function ComponentPage({
               >
                 install <code className="font-mono">@kidcash/ui</code>
               </a>{' '}
-              and copy the example above into your own app.
+              and use <strong>{comp.name}</strong> in your own app.
             </p>
           </div>
         </div>
