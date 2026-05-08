@@ -545,7 +545,7 @@ function PlaygroundInner() {
             <p className="text-sm text-[var(--theme-text-muted)] flex items-center justify-center gap-2">
               Press <Keyboard>⌘</Keyboard> <Keyboard>K</Keyboard> to open the command palette
             </p>
-            <div className="flex items-center justify-center gap-3 pt-4">
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
               <Button
                 size="lg"
                 iconLeft={<span>✨</span>}
@@ -558,11 +558,20 @@ function PlaygroundInner() {
               <Button
                 size="lg"
                 variant="secondary"
+                onClick={() => {
+                  window.location.href = '/components';
+                }}
+              >
+                Browse 27 components →
+              </Button>
+              <Button
+                size="lg"
+                variant="ghost"
                 onClick={() =>
                   window.open('https://github.com/simsketch/kidcash-ui#readme', '_blank', 'noopener')
                 }
               >
-                Read the docs
+                GitHub
               </Button>
             </div>
           </header>
